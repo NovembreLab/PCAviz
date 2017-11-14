@@ -1,0 +1,165 @@
+---
+title: "Illustration of PCAviz on Iris data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PCAviz Iris demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette illustrates the PCAviz plotting interface on the Iris
+data set. Although this data set is small and near ubiquitously used
+for simple demonstrations in R, it serves well to illustrate the range
+of plotting options in the PCAviz package.
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = TRUE,comment = "#",fig.width = 5,
+                      fig.height = 4,fig.align = "center",
+                      fig.cap = "&nbsp;")
+```
+
+Begin by loading these packages into your R environment. 
+
+```{r, message = FALSE}
+library(PCAviz)
+library(ggplot2)
+library(magrittr)
+# library(rsvd)
+```
+
+## Load the data and compute the PCs
+
+Load the Iris data. Here, we add an "id" column to the table.
+
+```{r}
+data(iris)
+iris <- cbind(iris,data.frame(id = 1:150))
+iris <- transform(iris,id = as.character(id))
+```
+
+Compute principal components using `prcomp` (alternatively,
+you may use `princomp` or `rpca` from the `rsvd` package).
+
+```{r}
+# out.pca <- princomp(iris[1:4])
+# out.pca <- rpca(iris[1:4],k = 4,center = TRUE,scale = FALSE,retx = TRUE)
+out.pca <- prcomp(iris[1:4])
+```
+
+Create the "pcaviz" object from the Iris data and the computed PCs.
+
+```{r}
+iris <- pcaviz(out.pca,dat = iris)
+```
+
+The first PC captures over 90% of the total variance in the Iris
+samples.
+
+```{r}
+screeplot(iris,type = "pve")
+```
+
+The first PC captures more variation in Petal Length than other variables.
+
+```{r, fig.height = 4, fig.width = 4}
+pcaviz_loadingsplot(iris,pc.dim = "PC1")
+```
+
+Scale the PCs, then rotate the first two PCs by 15 degrees.
+
+```{r}
+iris <- pcaviz_reduce_whitespace(iris) %>%
+        pcaviz_rotate(15)
+```
+		
+Print out a summary of the PCA results and accompanying Iris data.
+
+```{r}
+summary(iris)
+```
+
+## Create visualizations of the Iris PCA results
+
+Calling `plot` without any additional options shows the samples projected 
+onto the first two PCs, labeled by Species.  The large circles represent the 
+group summaries  (that is, the median PC projection for each of the three Iris 
+species). Also observe that an abbreviated label is automatically created.
+
+```{r}
+plot(iris)
+```
+
+Setting `draw.points = TRUE` instead uses different colors and shapes to
+depict the "Species" assignment.
+
+```{r}
+plot(iris,draw.points = TRUE)
+```
+
+In the next plot, we use a color gradient to represent a continuous variable
+(Petal Length), and the sample ids are plotted instead of points.
+
+```{r}
+plot(iris,color = "Petal.Length",label = "id")
+```
+
+Show Petal Length as different colors, and Species as different shapes.
+
+```{r}
+plot(iris,draw.points = TRUE,color = "Petal.Length",shape = "Species")
+```
+
+Plot the first PC against Petal Width. When plotting a PC against a data
+column, the linear relationship between the two variables is automatically
+summarized with the linear best fit (dashed line), and the confidence 
+intervals (dotted lines).
+
+```{r}
+plot(iris,coords = c("PC1","Petal.Width"),draw.points = TRUE)
+```
+
+The PCAviz plotting interface also allows for quickly plotting
+multiple combinations of PCs.
+
+```{r, fig.width = 7,fig.height = 6}
+plot(iris,coords = paste0("PC",1:4),group = NULL,scale.pc.axes = 0.6)
+```
+
+The PCAviz package has an easy-to-use interface for creating
+violin plots to visualize the relationship between PCs and categorical
+data variables. In this example, Species is compared against all four PCs.
+
+```{r}
+pcaviz_violin(iris)
+```
+
+One advantage of ggplot2 graphics is that it easily allows for combining 
+plots; however, one has to take some care to ensure that the ggplot layers
+are evaluated correctly. Here we give an example of overlaying additional 
+data on top of the PCAviz scatterplot (we use this additional layer in this
+example to highlight samples with unusually small or unusually large sepals). 
+Note that the `inherit.aes = FALSE` option is needed, otherwise the code 
+will generate an error.
+
+```{r}
+dat <- subset(iris$data,Sepal.Width <= 2 | Sepal.Width >= 4)
+dat <- with(dat,data.frame(x = PC1,y = PC2))
+plot(iris,draw.points = TRUE,shape = "Species",group = NULL) +
+  geom_point(data = dat,aes(x = x,y = y),
+             shape = 1,size = 5.5,inherit.aes = FALSE)
+```
+
+Create an interactive plot using the `plotly` package, and embed it in a 
+separate HTML file. View the interactive plot [here](iris_plotly.html).
+
+```{r}
+iris_plotly <- plot(iris,plotly = TRUE,
+                    tooltip = c("id","Species","Sepal.Length","Sepal.Width",
+                                "Petal.Length","Petal.Width"),
+                    plotly.file = "iris_plotly.html")
+```
+
+Note that the interactive plot can also be easily embedded within this 
+document. In this example we have placed it in a separate webpage because
+loading the JavaScript can be slow in some browsers.

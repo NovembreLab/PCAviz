@@ -1,0 +1,25 @@
+# Demo of plotly figure embedded into R Markdown notebook
+
+### How to convert R Markdown to HTML in RStudio
+
++ Open this file in RStudio.
+  
++ Click on the "Knit" button above the top-left pane.
+
++ **Note:** This does not work on *midway1*.
+
+### How to convert R Markdown to HTML in R
+
++ First, you need to install `pandoc`.
+
++ You also need the the `rmarkdown` package.
+
++ Run the following command: 
+  `Rscript -e "rmarkdown::render('demo.plotly.Rmd')"`
+
+```{r,warning=FALSE, message=FALSE}
+library(plotly)
+df <- diamonds[sample(1:nrow(diamonds),size = 2000),]
+plot_ly(df,x = ~carat,y = ~price,mode = "markers",
+              color = ~cut,size = ~z)
+```

@@ -1,0 +1,18 @@
+navbar:
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Vignettes"
+      href: articles/index.html
+    - text: "Functions"
+      href: reference/index.html
+
+articles:
+  - title: "Vignettes"
+    desc: >
+      The following vignettes provide detailed illustrations of the
+      PCAviz package applied to different data sets.
+    contents:
+    - iris
+    - popres
+    - regmap

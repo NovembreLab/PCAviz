@@ -1,0 +1,223 @@
+---
+title: "Illustration of PCAviz on POPRES data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PCAviz POPRES demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+In this vignette, we demonstrate that the PCAviz package can be used
+to quickly create sophisicated plots that closely reproduce
+publication-quality figures; compare the plots here against the plots
+in Novembre *et al*, "Genes mirror geography within Europe," *Nature*
+**456**, 274-–274 (2008). The principal components computed from
+genotypes of European samples (the POPRES sample) have a remarkably
+close connection to the geographic distribution of the samples, which
+we examine in this vignette.
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = TRUE,comment = "#",fig.width = 7,
+                      fig.height = 5,fig.align = "center",
+                      fig.cap = "&nbsp;")
+```
+
+Begin by loading these packages into your R environment.
+
+```{r, message = FALSE}
+library(PCAviz)
+library(magrittr)
+library(cowplot)
+```
+
+## Load the data and PCA results
+
+Load the POPRES data and PCA results, and combine these data into a
+"pcaviz" object. Here we also generate a sensible abbreviation for the
+country labels based on the ISO standard. (Note that abbreviated country
+labels are already available in the "abbrv" column, but we generate a 
+new abbreviation to illustrate one of the PCAviz package features.)
+
+```{r}
+data(popres)
+popres <- pcaviz(dat = popres$x,
+                 sdev = popres$sdev,
+                 rotation = popres$rotation)
+popres <- pcaviz_abbreviate_var(popres,"country")
+```
+
+Print a summary of the POPRES data.
+
+```{r}
+summary(popres)
+```
+
+Plot the eigenvalues of the first four PCs.
+
+```{r, fig.height = 5,fig.width = 5}
+screeplot(popres,type = "eigenvalue")
+```
+
+Examining the loadings for the first PC, a region on chromosome 15 clearly
+stands out for having an unusually large loading:
+
+```{r, fig.width = 8, fig.height = 2.5}
+pcaviz_loadingsplot(popres,min.rank = 0.9,gap = 400)
+```
+
+This region is the *HERC2/OCA2* locus---a locus that has been shown in
+many studies to be involved in adaptation to local enviornments through 
+natural selection.
+
+## Select data samples, and manipulate PCs
+
+Remove the Russian (RU) and Scottish (Sct) samples, then rescale and
+rotate the PCs.
+
+```{r}
+popres <- subset(popres,!(abbrv == "RU" | abbrv == "Sct")) %>%
+          pcaviz_reduce_whitespace(c("PC1","PC2")) %>%
+          pcaviz_rotate(105)
+```
+
+Retrieve the suggested coloring scheme for plotting the samples by
+country-of-origin.
+
+```{r}
+clrs <- c(with(popres$data,tapply(as.character(color),country,
+                                  function (x) x[1])))
+names(clrs) <- NULL
+```
+
+## Create visualizations of the POPRES data
+
+Calling "plot" without specifying any additional options shows the
+POPRES samples projected onto the first two PCs, with the samples
+labeled according to their country-of-origin. This plot closely
+reproduces Fig. 1a of Novembre *et al* (2008). Note the use of the
+abbreviated country names.
+
+```{r, results = "hide", fig.width = 8}
+plot(popres)
+```
+
+One difference with the published plot is the color scheme used.
+In this next code chunk, we do a better job reproducing the figure in
+the *Nature* paper by using the colors provided in the `popres` data
+table. (Note that the Russian and Scottish samples are missing from
+our plot since we removed them above.)
+
+```{r, results = "hide", fig.width = 8}
+plot(popres,colors = clrs)
+```
+
+Compare this projection onto PCs 1 and 2 against the countries'
+actual geographical locations:
+
+```{r, fig.width = 5, fig.height = 5}
+plot(popres,coords = c("longitude","latitude"),group = "country.abbrv",
+     label = NULL,colors = clrs,overlay = overlay_map_europe,
+     show.legend = FALSE)
+```
+
+Next, we examine the relationships between PC1 and longitude, and
+between PC2 and latitude. When plotting a PC against a data column,
+the linear best fit is automatically drawn (dashed line), along
+with confidence intervals (dotted lines).
+
+```{r, results = "hide", fig.height = 3.5}
+plot1 <- plot(popres,coords = c("latitude","PC2"),group = NULL,
+              show.legend = FALSE)
+plot2 <- plot(popres,coords = c("longitude","PC1"),group = NULL,
+			        show.legend = FALSE)
+plot_grid(plot1,plot2,labels = c("A","B"))
+```
+
+This is a more condensed version of the previous plot obtained by
+setting `group = "country.abbrv"` and `label = NULL`.
+
+```{r, fig.height = 3.5}
+plot1 <- plot(popres,coords = c("latitude","PC2"),group = "country.abbrv",
+              label = NULL,show.legend = FALSE)
+plot2 <- plot(popres,coords = c("longitude","PC1"),group = "country.abbrv",
+              label = NULL,show.legend = FALSE)
+plot_grid(plot1,plot2,labels = c("A","B"))
+```
+
+Next, we set the "color" argument to visualize the East-West and 
+North-South trends in PC space.
+
+```{r, results = "hide", fig.width = 8, fig.height = 4}
+plot1 <- plot(popres,color = "latitude",group = "country.abbrv")
+plot2 <- plot(popres,color = "longitude",group = "country.abbrv")
+plot_grid(plot1,plot2,labels = c("A","B"))
+```
+
+Here is alternative way to visualize the same result on a map of
+Europe; the colors are used to depict PCs 1 and 2.
+
+```{r, results = "hide", fig.width = 8, fig.height = 3.5}
+plot1 <- plot(popres,coords = c("longitude","latitude"),color = "PC1",
+              group = "country.abbrv",overlay = overlay_map_europe)
+plot2 <- plot(popres,coords = c("longitude","latitude"),color = "PC2",
+              group = "country.abbrv",overlay = overlay_map_europe)
+plot_grid(plot1,plot2,labels = c("A","B"))
+```
+
+In view of the strong relationship between geography within Europe and
+the first two PCs computed from the genotype data, we attempt to fit the
+samples onto a map of Europe by translating and scaling PCs 1 and 2.
+
+```{r}
+fit1 <- lm(longitude ~ PC1,popres$data)
+fit2 <- lm(latitude ~ PC2,popres$data)
+mu1  <- coef(fit1)[["(Intercept)"]]
+mu2  <- coef(fit2)[["(Intercept)"]]
+b1   <- coef(fit1)[["PC1"]]
+b2   <- coef(fit2)[["PC2"]]
+popres.for.map <- 
+  pcaviz_scale(popres, scale = c(b1,b1),dims = c("PC1","PC2")) %>%
+  pcaviz_translate(a = c(mu1,mu2),dims = c("PC1","PC2"))
+```
+
+Plot PCs 1 and 2 onto the map of Europe after this scaling and 
+translation step.
+
+```{r, fig.width = 6}
+plot(popres.for.map,label = NULL,group = "country",
+     show.legend = FALSE,overlay = overlay_map_europe)
+```
+
+Next, plot all the samples onto the map of Europe.
+
+```{r, results = "hide", fig.width = 9}
+plot(popres.for.map,group = NULL,overlay = overlay_map_europe)
+```
+
+We can also easily create interactive version of this plot, and embed it 
+in a separate HTML file. View the interactive plot [here](popres_plotly.html).
+
+```{r, results = "hide"}
+popres_plotly <- 
+  plot(popres.for.map,plotly = TRUE,overlay = overlay_map_europe,
+       tooltip = c("id","country","longitude","latitude","PC1","PC2"),
+       plotly.file = "popres_plotly.html")
+```
+
+Note that the interactive plot can also be easily embedded within this 
+document. In this example we have placed it in a separate webpage because
+loading the JavaScript can be slow in some browsers.
+
+Finally, we compare PCs 1 and 2 against country-of-origin using the
+"pcaviz_violin" interface. Since density estimates are less useful for
+small numbers of samples, here we show only countries with a sample
+size of at least 10.
+
+```{r, fig.width = 6.5, fig.height = 7}
+countries <- c("AT","BE","CH","CZ","DE","ES","FR","GB","HU","IE","IT",
+               "NL","PL","PT","RO","RS","SE")
+dat <- subset(popres,is.element(abbrv,countries))
+pcaviz_violin(dat,pc.dims = c("PC1","PC2"),
+              plot.grid.params = list(nrow = 2))
+```

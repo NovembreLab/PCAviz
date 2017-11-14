@@ -1,0 +1,22 @@
+citHeader("To cite PCAviz in publications use:")
+
+website <- "http://github.com/NovembreLab/PCAviz"
+year    <- sub("-.*","",meta$Date)
+version <- sprintf("R package version %s",meta$Version)
+
+citEntry(entry = "Manual",
+  title  = "{PCAviz}: Visualizing Principal Components Analysis",
+  author = personList(as.person("John Novembre"),
+                      as.person("Richard Williams"),
+                      as.person("Hossein Pourreza"),
+                      as.person("Yuexi Wang"),
+                      as.person("Peter Carbonetto")),
+  year   = year,
+  note   = version,
+  url    = website,
+
+  textVersion =
+    paste("John Novembre, Richard Williams, Hossein Pourreza, Yuexi ",
+          "Wang and Peter Carbonetto (2017). PCAviz: Visualizing ",
+          "Principal Components Analysis. ",version,". ",website,sep="")
+)

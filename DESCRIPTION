@@ -1,0 +1,40 @@
+Package: PCAviz
+Encoding: UTF-8
+Type: Package
+Version: 0.3-27
+Date: 2017-06-11
+Title: Visualizing Principal Components Analysis
+Authors@R: c(person("John","Novembre",role=c("aut","cre"),
+                    email="jnovembre@uchicago.edu"),
+             person("Richard","Williams",role="aut"),
+             person("Hossein","Pourreza",role="aut"),
+             person("Yuexi","Wang",role="aut"),
+             person("Peter","Carbonetto",role="aut"))
+URL: http://github.com/NovembreLab/PCAviz
+BugReports: http://github.com/NovembreLab/PCAviz/issues
+Description: The 'PCAviz' package provides a simple interface for
+    quickly creating visually compelling plots from Principal
+    Components Analysis (PCA) and accompanying data. See the vignettes
+    included in this package for examples of plots generated with the
+    'PCAviz' package. The plotting functions are also suitable for other
+    dimensionality reduction techniques such as Multidimensional Scaling
+    (MDS) and Local Linear Embedding (LLE).
+Depends: R (>= 3.3.0)
+Imports: 
+    methods,
+    stats,
+    grid,
+    ggplot2,
+    cowplot,
+    countrycode,
+    maps,
+    htmlwidgets,
+    plotly
+Suggests:
+    knitr,
+    rsvd,
+    magrittr,
+    testthat
+License: GPL (>= 3)
+NeedsCompilation: no
+VignetteBuilder: knitr

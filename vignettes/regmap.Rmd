@@ -1,0 +1,94 @@
+---
+title: "Illustration of PCAviz on RegMap data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PCAviz RegMap demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette illustrates PCAviz for visualizing principal components
+in the Regmap data set. The first two PCs of the genotype data
+distinguish geographic origins of the *Arabidopsis thaliana* samples,
+although some overlap is evident.
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = TRUE,comment = "#",fig.width = 6,
+                      fig.height = 5,fig.align = "center",
+                      fig.cap = "&nbsp;")
+```
+
+Begin by loading these packages into your R environment.
+
+```{r, message = FALSE}
+library(PCAviz)
+library(cowplot)
+```
+
+## Load the data and PCA results
+
+Load the RegMap data and the computed PCs, and convert these data to a
+"pcaviz" object. (We do not include the "region" column.)
+
+```{r}
+data(regmap)
+regmap <- pcaviz(dat = regmap[-10])
+```
+
+Print a summary of the RegMap data.
+
+```{r}
+summary(regmap)
+```
+
+## Create visualizations of the RegMap PCA results
+
+Calling "plot" without specifying any additional options shows the
+projection of the samples onto the first two PCs, with the samples
+labeled by the country in which they were found.
+
+```{r}
+plot(regmap)
+```
+
+The group summaries add a lot of clutter to these plots, so
+we remove them. We also don't need the legend.
+
+```{r}
+plot(regmap,group = NULL,show.legend = FALSE)
+```
+
+Next, show the country assignments using different colors and shapes 
+instead of labels.
+
+```{r, fig.width = 7, fig.height = 6}
+plot(regmap,draw.points = TRUE,group = NULL)
+```
+
+By setting the `color` argument to "longitude" and "latitude", these
+next two plots help us understand the relationship between geography
+and projection onto the PC embedding.
+
+```{r, fig.width = 7, fig.height = 3}
+plot1 <- plot(regmap,draw.points = TRUE,color = "longitude",group = NULL)
+plot2 <- plot(regmap,draw.points = TRUE,color = "latitude",group = NULL)
+plot_grid(plot1,plot2,labels = c("A","B"))
+```
+
+Does "median intensity" (this is a technical artifact) explain some
+variation in the first PC?
+
+```{r, fig.width = 7, fig.height = 6}
+plot(regmap,coords = c("PC1","median_intensity"),draw.points = TRUE,
+     group = NULL)
+```
+
+The `plot` function can also be used to quickly plot combinations of PCs. 
+This code also illustrates customization of the plotting parameters---in this 
+case, since the plots are small, the default point size is a bit too large.
+
+```{r, fig.width = 7, fig.height = 7}
+plot(regmap,coords = paste0("PC",1:4),group = NULL,draw.points = TRUE,
+     geom.point.params = list(size = 1,na.rm = TRUE))
+```
