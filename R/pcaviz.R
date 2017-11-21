@@ -1104,7 +1104,8 @@ pcaviz_ggplot <-
   if (plotly) {
 
     # Return a plotly graph.
-    out <- ggplotly(plot.grid.args[[1]],tooltip = paste0("var.",tooltip))
+    out <- suppressMessages(ggplotly(plot.grid.args[[1]],
+                                     tooltip = paste0("var.",tooltip)))
 
     # Save the plotly graph to an HTML file, if requested.
     if (!is.null(plotly.file))
