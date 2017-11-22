@@ -695,11 +695,11 @@ pcaviz_ggplot <-
               list(size = 3,stroke = 0,na.rm = TRUE)
             else
               list(size = 2,stroke = 1,na.rm = TRUE),
-            geom.text.params = list(size = 3,fontface = "bold",na.rm = TRUE),
+            geom.text.params = list(size = 3,fontface = "bold",na.rm = TRUE,alpha=1),
             geom.point.summary.params = list(shape = 19,stroke = 1,size = 10,
-                show.legend = FALSE),
+                show.legend = FALSE,alpha=.8),
             geom.text.summary.params = list(size = 3.25,fontface = "plain",
-              color = "black",show.legend = FALSE),
+              color = "black",show.legend = FALSE,alpha=.8),
             geom.segment.pc.axes = list(color = "black",linetype = "solid",
               arrow = arrow(length = unit(5,"pt"),ends = "both",type = "open"),
               size = 0.3),
