@@ -6,7 +6,16 @@ accompanying data.
 	
 ## Quick start
 
-Install and test the latest version of the PCAviz package:
+Install the latest version of the PCAviz package using devtools:
+
+```R
+install.packages("devtools")
+library(devtools)
+install_github("NovembreLab/PCAviz")
+```
+
+Alternatively, to install and test PCAviz, run the following commands
+in the shell:
 
 ```bash
 R CMD build --resave-data PCAviz
