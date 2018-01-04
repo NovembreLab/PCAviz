@@ -11,7 +11,7 @@ Install the latest version of the PCAviz package using devtools:
 ```R
 install.packages("devtools")
 library(devtools)
-install_github("NovembreLab/PCAviz")
+install_github("NovembreLab/PCAviz",build_vignettes = TRUE)
 ```
 
 Alternatively, to install and test PCAviz, run the following commands
@@ -22,7 +22,10 @@ R CMD build --resave-data PCAviz
 R CMD check --as-cran PCAviz_0.3-27.tar.gz
 R CMD INSTALL PCAviz_0.3-27.tar.gz
 ```
-   
+
+Note that these commands require that the dependencies have already
+been installed. See the [DESCRIPTION](DESCRIPTION) file for details.
+
 Load PCAviz into the R environment, and get an overview of the package:
 
 ```R
