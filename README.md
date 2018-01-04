@@ -1,4 +1,4 @@
-# PCAviz
+# PCAviz (dev ver)
 
 The PCAviz R package provides a simple interface for quickly creating
 visually compelling plots from Principal Components Analysis (PCA) and
