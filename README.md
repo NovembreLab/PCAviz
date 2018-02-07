@@ -6,14 +6,11 @@ accompanying data.
 	
 ## Quick start
 
-Install the [most recent
-release](https://github.com/NovembreLab/PCAviz/releases/tag/v0.3-29)
-of the PCAviz package using devtools:
+Install the most recent version of the PCAviz package using devtools:
 
 ```R
 install.packages("devtools")
-library(devtools)
-install_github("NovembreLab/PCAviz",ref = "v0.3-29",build_vignettes = TRUE)
+devtools::install_github("NovembreLab/PCAviz",build_vignettes = TRUE)
 ```
 
 Alternatively, to install and test PCAviz, run the following commands
