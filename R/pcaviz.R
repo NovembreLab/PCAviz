@@ -465,11 +465,13 @@ pcaviz_reduce_whitespace <- function (x, dims) {
   return(x)
 }
 
-# Returns a vector of abbreviated strings, allowing for both a
-# customized abbreviation (e.g., specific to country names) and a
+# Returns a vector of abbreviated strings, allowing for either a
+# customized abbreviation (e.g., specific to country names) or a
 # generic abbreviation.
-create_abbreviated_label <- function (x, abbrv.generic = abbreviate,
-                                      abbrv.custom = NULL) {
+create_abbreviated_label <-
+  function (x,
+            abbrv.generic = function(x) abbreviate(gsub("[^[:alnum:] ]","",x)),
+            abbrv.custom = NULL) {
 
   # Check input argument "x", and get "y", the character vector to
   # convert.
@@ -480,37 +482,37 @@ create_abbreviated_label <- function (x, abbrv.generic = abbreviate,
   else
     y <- x
 
-  # Generate the custom abbreviations ("a").
+  # Try to generate the custom abbreviations.
   n <- length(y)
-  if (is.null(abbrv.custom))
-    a <- rep(as.character(NA),n)
-  else {    if (!is.function(abbrv.custom))
+  a <- rep(as.character(NA),n)
+  if (!is.null(abbrv.custom)) {
+    if (!is.function(abbrv.custom))
       stop("Argument \"abbrv.custom\" should be a function")
-      a <- abbrv.custom(y)
+    a <- abbrv.custom(y)
     if (!is.character(a))
       stop("Argument \"abbrv.custom\" should return a character vector")
   }
 
-  # Generate any additional generic abbreviations, "b".
-  if (!is.function(abbrv.generic))
-    stop("Argument \"abbrv.generic\" should be a function")
-  i    <- which(is.na(a))
-  a[i] <- y[i]
-  b    <- abbrv.generic(a)
-  if (!is.character(b))
-    stop("Argument \"abbrv.generic\" should return a character vector")
+  # Generate generic abbreviations, if needed.
+  if (any(is.na(a))) {
+    if (!is.function(abbrv.generic))
+      stop("Argument \"abbrv.generic\" should be a function")
+    a <- abbrv.generic(y)
+    if (!is.character(a))
+      stop("Argument \"abbrv.generic\" should return a character vector")
+  }
 
   # If x is a factor, replace the levels with the abbreviations.
   # Otherwise, return the abbreviations.
   if (is.factor(x)) {
-    if (length(unique(b)) < nlevels(x))
+    if (length(unique(a)) < nlevels(x))
       stop(paste("create_abbreviated_label did not generate unique",
                  "abbreviations for factor levels; consider setting",
                  "abbrv.custom = NULL to avoid this"))
-    levels(x) <- b
+    levels(x) <- a
     return(x)
   } else
-    return(b)
+    return(a)
 }
 
 # Generates an abbreviated version of a specified variable in a pcaviz
@@ -518,9 +520,10 @@ create_abbreviated_label <- function (x, abbrv.generic = abbreviate,
 pcaviz_abbreviate_var <-
   function (x, col,
             abbrv.generic = function (x)
-              abbreviate(x,minlength = 2,named = FALSE,method = "both.sides"),
+              abbreviate(abbreviate(gsub("[^[:alnum:] ]","",x)),
+                         minlength = 2,named = FALSE,method = "both.sides"),
             abbrv.custom = function (x)
-               countrycode(x,"country.name.en","iso2c",warn = FALSE)) {
+              countrycode(x,"country.name.en","iso2c",warn = FALSE)) {
 
   # Check input "x".
   if (!inherits(x,"pcaviz"))
@@ -695,11 +698,12 @@ pcaviz_ggplot <-
               list(size = 3,stroke = 0,na.rm = TRUE)
             else
               list(size = 2,stroke = 1,na.rm = TRUE),
-            geom.text.params = list(size = 3,fontface = "bold",na.rm = TRUE,alpha=1),
+            geom.text.params = list(size = 3,fontface = "bold",na.rm = TRUE,
+              alpha = 1),
             geom.point.summary.params = list(shape = 19,stroke = 1,size = 10,
-                show.legend = FALSE,alpha=.8),
+                show.legend = FALSE,alpha = 0.8),
             geom.text.summary.params = list(size = 3.25,fontface = "plain",
-              color = "black",show.legend = FALSE,alpha=.8),
+              color = "black",show.legend = FALSE,alpha = 0.8),
             geom.segment.pc.axes = list(color = "black",linetype = "solid",
               arrow = arrow(length = unit(5,"pt"),ends = "both",type = "open"),
               size = 0.3),

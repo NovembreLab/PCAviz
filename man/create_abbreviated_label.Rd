@@ -5,14 +5,18 @@
 customized abbreviation (e.g., specific to country names) and a generic
 abbreviation.}
 \usage{
-create_abbreviated_label(x, abbrv.generic = abbreviate, abbrv.custom = NULL)
+create_abbreviated_label(x,
+  abbrv.generic = function(x) abbreviate(gsub("[^[:alnum:] ]","",x)),
+  abbrv.custom = NULL)
 }
 \arguments{
   \item{x}{A factor or character vector to be abbreviated.}
   
   \item{abbrv.generic}{Function accepting a single argument that returns
   a character vector containing abbreviations for the character strings
-  in its first (and only) argument.}
+  in its first (and only) argument. The default calls the
+  \code{\link{abbreviate}} function after first removing all
+  non-alphanumeric characters.}
 
   \item{abbrv.custom}{Takes the same form as the \code{abbrv.genetic}
     function, but can also return \code{NA} for any character strings
