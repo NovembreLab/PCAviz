@@ -430,7 +430,6 @@ pcaviz_shapes <- function (n = 5) {
 theme_pcaviz <- function()
   theme_cowplot(font_size = 10) +
   theme(panel.border = element_blank(),
-        axis.line    = element_blank(),
         plot.title   = element_text(face = "plain"))
 
 # This function heuristically rescales the PC data in a pcaviz object
