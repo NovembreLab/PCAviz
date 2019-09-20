@@ -691,8 +691,9 @@ pcaviz_ggplot <-
             color, shape, colors, shapes, abbreviated.label, 
             group.summary.fun = pcaviz_summary_default,
             group.summary.labels = TRUE, draw.pc.axes, hide.xy.axes,
-            draw.linear.fit, draw.confint, confint.level = 0.95,
-            show.r.squared, preserve.scale, overlay = NULL,
+            include.with.pc.axes, draw.linear.fit, draw.confint,
+            confint.level = 0.95, show.r.squared, preserve.scale,
+            overlay = NULL,
             geom.point.params = if (plotly)
               list(size = 3,stroke = 0,na.rm = TRUE)
             else
@@ -711,7 +712,7 @@ pcaviz_ggplot <-
               linetype = "dashed"),
             geom.abline.params.confint = list(color = "dimgray",
               linetype = "dotted"),
-            scale.pc.axes = 0.8, theme = theme_pcaviz(), show.legend = TRUE,
+            scale.pc.axes = 0.6, theme = theme_pcaviz(), show.legend = TRUE,
             plot.title, plot.grid.params = list(), tooltip = NULL,
             plotly.file = NULL, ...) {
 
@@ -969,7 +970,26 @@ pcaviz_ggplot <-
     hide.xy.axes <- draw.pc.axes
   if (!is.TorF(hide.xy.axes))
     stop("Argument \"hide.xy.axes\" should be TRUE or FALSE")
-      
+
+  # Decide whether to add some additional information (e.g., to the PC
+  # axes (e.g., proportion of variance explained).
+  if (missing(include.with.pc.axes)) {
+    if (valid.pc.dims(x,coords) & !any(is.na(x$sdev))) {
+      message(paste("Proportion of variance explained (PVE) will be added",
+                    "to the axis labels."))
+      include.with.pc.axes <- "pve"
+    } else
+      include.with.pc.axes <- "none"
+  }
+  if (!(is.character(include.with.pc.axes) &
+        is.element(include.with.pc.axes,c("none","var","pve","eigenvalue"))))
+    stop(paste("Argument \"include.with.pc.axes\" must be one of",
+               "\"none\", \"var\", \"pve\" or \"eigenvalue\""))
+  if (include.with.pc.axes != "none" & any(is.na(x$sdev)))
+    stop(paste("include.with.pc.axes = \"",include.with.pc.axes,
+               "\" is not a valid setting because standard devations ",
+               "are not provided by pcaviz object \"x\"",sep = ""))
+  
   # Decide whether to draw the linear fit and/or confidence interval.
   if (!missing(draw.linear.fit) & missing(draw.confint))
     draw.confint <- draw.linear.fit
@@ -1090,10 +1110,11 @@ pcaviz_ggplot <-
           pcaviz_ggplot_helper(x,coords[c(i,j)],draw.points,label,group,
                                color,shape,colors.scale,shapes.scale,alabel,
                                group.summary.fun,group.summary.labels,
-                               draw.pc.axes,hide.xy.axes,draw.linear.fit,
-                               draw.confint,confint.level,show.r.squared,
-                               preserve.scale,overlay,geom.point.params,
-                               geom.text.params,geom.point.summary.params,
+                               draw.pc.axes,hide.xy.axes,include.with.pc.axes,
+                               draw.linear.fit,draw.confint,confint.level,
+                               show.r.squared,preserve.scale,overlay,
+                               geom.point.params,geom.text.params,
+                               geom.point.summary.params,
                                geom.text.summary.params,
                                geom.segment.pc.axes,geom.text.pc.axes,
                                geom.abline.params.linearfit,
@@ -1157,20 +1178,9 @@ pcaviz_screeplot <-
   if (any(is.na(x$sdev)))
     stop(paste("Cannot create scree plot because standard devations",
                "are not provided by pcaviz object \"x\""))
-  if (type == "var") {
-    y       <- x$sdev^2
-    y.label <- "variance explained"
-  } else if (type == "pve") {
-    if (is.null(x$var))
-      stop(paste("Cannot plot proportion of variance explained because",
-                 "total variance is not provided by pcaviz object \"x\""))
-    y       <- x$sdev^2/x$var
-    y.label <- "proportion of variance explained"
-  } else if (type == "eigenvalue") {
-    y       <- x$sdev^2
-    y.label <- "eigenvalue"
-  } else
-    stop("Value for argument \"type\" is unsupported")
+  out     <- get.screeplot.quantity(x,type)
+  y       <- out$y
+  y.label <- out$y.label
 
   # Initialize the ggplot object.
   pc.labels <- get.pc.cols(x)
@@ -1515,6 +1525,25 @@ valid.pc.dims <- function (x, dims) {
 is.data.type <- function (x, cols, data.types)
   all(is.element(x$data.coltypes[cols],data.types))
 
+# Get the quantity to show in the vertical axis of the scree plot.
+get.screeplot.quantity <- function (x, type) {
+  if (type == "var") {
+    y       <- x$sdev^2
+    y.label <- "variance explained"
+  } else if (type == "pve") {
+    if (is.null(x$var))
+      stop(paste("Cannot plot proportion of variance explained because",
+                 "total variance is not provided by pcaviz object \"x\""))
+    y       <- x$sdev^2/x$var
+    y.label <- "proportion of variance explained"
+  } else if (type == "eigenvalue") {
+    y       <- x$sdev^2
+    y.label <- "eigenvalue"
+  } else
+    stop("Value for argument \"type\" is unsupported")
+  return(list(y = y,y.label = y.label))
+}
+
 # Add a single column y to x$data.
 pcaviz.add.col <- function (x, y, y.name, y.coltype) {
 
@@ -1700,7 +1729,7 @@ collides <- function (x0, y0, x1, y1, xmin, ymin, xmax, ymax) {
 # Construct the data frame passed as the "data" argument to
 # "geom_segment" to draw a segment on the line through points
 # (x1,y1,x2,y2), but bounded by the extent of the data.
-get_axis_data <- function (x, y, x1, y1, x2, y2, box.ratio = 0.8) {
+get_axis_data <- function (x, y, x1, y1, x2, y2, box.ratio = 0.6) {
 
   # Get the bounding box for the data points.
   xmin <- min(x,na.rm = TRUE)
@@ -1759,10 +1788,11 @@ get_axis_data <- function (x, y, x1, y1, x2, y2, box.ratio = 0.8) {
 pcaviz_ggplot_helper <-
   function (x, coords, draw.points, label, group, color, shape, colors.scale,
             shapes.scale, alabel, group.summary.fun, group.summary.labels,
-            draw.pc.axes, hide.xy.axes, draw.linear.fit, draw.confint,
-            confint.level, show.r.squared, preserve.scale, overlay,
-            geom.point.params, geom.text.params, geom.point.summary.params,
-            geom.text.summary.params, geom.segment.pc.axes, geom.text.pc.axes,
+            draw.pc.axes, hide.xy.axes, include.with.pc.axes, draw.linear.fit,
+            draw.confint, confint.level, show.r.squared, preserve.scale,
+            overlay, geom.point.params, geom.text.params,
+            geom.point.summary.params, geom.text.summary.params,
+            geom.segment.pc.axes, geom.text.pc.axes,
             geom.abline.params.linearfit, geom.abline.params.confint,
             scale.pc.axes, theme, show.legend, plot.title) {
 
@@ -1875,9 +1905,19 @@ pcaviz_ggplot_helper <-
                     "of \"scale.pc.axes\""))
     else {
       pc.axes.data <-
-        cbind(data.frame(label = paste0(" ",c(h,v))),
+        cbind(data.frame(label = paste0(" ",c(h,v)),stringsAsFactors = FALSE),
               rbind(pc.axis.h,pc.axis.v))
 
+      # If requested, add the statistic (variance explained, PVE or
+      # eigenvalue) to the axis labels.
+      if (include.with.pc.axes != "none") {
+        scree.data <- get.screeplot.quantity(x,include.with.pc.axes)
+        pc.axes.data[1,"label"] <-
+          sprintf("%s (%0.3f)",pc.axes.data[1,"label"],scree.data$y[h])
+        pc.axes.data[2,"label"] <- 
+          sprintf("%s (%0.3f)",pc.axes.data[2,"label"],scree.data$y[v])
+      }
+      
       # Draw the lines using geom_segment.
       out <- out + do.call("geom_segment",
                            c(list(data = pc.axes.data,
@@ -1930,6 +1970,14 @@ pcaviz_ggplot_helper <-
   if (show.r.squared)
     plot.title <- sprintf("%s (r2 = %0.3f)",plot.title,
                           summary(fit.lm)$r.squared)
+
+  # If requested, add the statistic (variance explained, PVE or
+  # eigenvalue) to the axis labels.
+  if (include.with.pc.axes != "none") {
+    scree.data <- get.screeplot.quantity(x,include.with.pc.axes)
+    out        <- out + labs(x = sprintf("%s (%0.3f)",h,scree.data$y[h]),
+                             y = sprintf("%s (%0.3f)",v,scree.data$y[v]))
+  }
   
   # Preserve the scaling of the x and y axes, if requested.
   if (preserve.scale)
@@ -1958,7 +2006,7 @@ pcaviz_ggplot_helper <-
             axis.line  = element_blank(),
             axis.ticks = element_blank(),
             axis.text  = element_blank())
-  
+
   # Return the ggplot object.
   return(out)
 }

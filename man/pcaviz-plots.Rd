@@ -165,6 +165,8 @@
 
   \item{hide.xy.axes}{If \code{TRUE}, hide the axis lines and ticks.}
 
+  \item{include.with.pc.axes}{Describe this argument here.}
+  
   \item{draw.linear.fit}{If \code{TRUE}, show the linear fit between the
     horizontal and vertical co-ordinates, as calculated by
     \code{\link[stats]{lm}}.}
