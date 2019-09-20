@@ -17,9 +17,9 @@ Alternatively, to install and test PCAviz, run the following commands
 in the shell:
 
 ```bash
-R CMD build --resave-data PCAviz
-R CMD check --as-cran PCAviz_0.3-32.tar.gz
-R CMD INSTALL PCAviz_0.3-32.tar.gz
+R CMD build PCAviz
+R CMD check --as-cran PCAviz_0.3-33.tar.gz
+R CMD INSTALL PCAviz_0.3-33.tar.gz
 ```
 
 Note that these commands require that the dependencies have already

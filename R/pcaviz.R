@@ -120,9 +120,11 @@ pcaviz <- function (out.pca, x = NULL, sdev = NULL, var = NULL,
   names(sdev) <- names(x)
 
   # Verify and process input "var".
-  if (!is.null(var))
+  if (!is.null(var)) {
     if (!(is.numeric(var) & length(var) == 1))
       stop("Argument \"var\" should be a numeric scalar")
+  } else
+    var <- NA
   
   # Verify and process input "rotation". Note that the columns of the
   # loadings matrix should match up with the columns of the rotated
@@ -975,9 +977,14 @@ pcaviz_ggplot <-
   # axes (e.g., proportion of variance explained).
   if (missing(include.with.pc.axes)) {
     if (valid.pc.dims(x,coords) & !any(is.na(x$sdev))) {
-      message(paste("Proportion of variance explained (PVE) will be added",
-                    "to the axis labels."))
-      include.with.pc.axes <- "pve"
+      if (any(is.na(x$var))) {
+        message("Variance explained will be added to the axis labels.")
+        include.with.pc.axes <- "var"
+      } else {
+        message(paste("Proportion of variance explained (PVE) will be added",
+                      "to the axis labels."))
+        include.with.pc.axes <- "pve"
+      }
     } else
       include.with.pc.axes <- "none"
   }
@@ -989,6 +996,9 @@ pcaviz_ggplot <-
     stop(paste("include.with.pc.axes = \"",include.with.pc.axes,
                "\" is not a valid setting because standard devations ",
                "are not provided by pcaviz object \"x\"",sep = ""))
+  if (include.with.pc.axes == "pve" & any(is.na(x$var)))
+    stop(paste("include.with.pc.axes = \"pve\" is not a valid setting because",
+               "total variance is not provided by pcaviz object \"x\""))
   
   # Decide whether to draw the linear fit and/or confidence interval.
   if (!missing(draw.linear.fit) & missing(draw.confint))
@@ -1531,7 +1541,7 @@ get.screeplot.quantity <- function (x, type) {
     y       <- x$sdev^2
     y.label <- "variance explained"
   } else if (type == "pve") {
-    if (is.null(x$var))
+    if (any(is.na(x$var)))
       stop(paste("Cannot plot proportion of variance explained because",
                  "total variance is not provided by pcaviz object \"x\""))
     y       <- x$sdev^2/x$var

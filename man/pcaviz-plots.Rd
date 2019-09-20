@@ -29,7 +29,7 @@
     label, group, color, shape, colors, shapes, abbreviated.label, 
     group.summary.fun = pcaviz_summary_default,
     group.summary.labels = TRUE, draw.pc.axes, hide.xy.axes,
-    draw.linear.fit, draw.confint, confint.level = 0.95,
+    include.with.pc.axes, draw.linear.fit, draw.confint, confint.level = 0.95,
     show.r.squared, preserve.scale, overlay = NULL,
     geom.point.params = if (plotly)
       list(size = 3,stroke = 0,na.rm = TRUE)
@@ -49,7 +49,7 @@
       linetype = "dashed"),
     geom.abline.params.confint = list(color = "dimgray",
       linetype = "dotted"),
-    scale.pc.axes = 0.8, theme = theme_pcaviz(), show.legend = TRUE,
+    scale.pc.axes = 0.6, theme = theme_pcaviz(), show.legend = TRUE,
     plot.title, plot.grid.params = list(), tooltip = NULL,
     plotly.file = NULL, \dots)
 
@@ -165,7 +165,11 @@
 
   \item{hide.xy.axes}{If \code{TRUE}, hide the axis lines and ticks.}
 
-  \item{include.with.pc.axes}{Describe this argument here.}
+  \item{include.with.pc.axes}{Statistic to show next to the axis labels:
+    \code{"var"}, for variance explained; \code{"pve"}, proportion of
+    variance explained; \code{"eigenvalue"}, which is equal to the
+    variance explained; or \code{"none"}, to show only the axis label
+    without an additional statistic.}
   
   \item{draw.linear.fit}{If \code{TRUE}, show the linear fit between the
     horizontal and vertical co-ordinates, as calculated by
@@ -288,8 +292,7 @@
     \code{\link{create_abbreviated_label}} for details. The default
     custom abbreviation is to convert country names in English to
     2-letter codes based on the based on the ISO 3166 standard; see
-    \code{\link[countrycode]{countrycode}} and
-    \code{\link[countrycode]{countrycode_data}} for more information;
+    \code{\link[countrycode]{countrycode}} for more information;
     including other options for generating country abbreviations.}
 
   \item{stat.numeric}{Summary statistic for numeric vectors used by
@@ -417,8 +420,7 @@
   \code{\link[plotly]{ggplotly}},
   \code{\link[htmlwidgets]{saveWidget}}
   \code{\link[cowplot]{theme_cowplot}},
-  \code{\link[countrycode]{countrycode}},
-  \code{\link[countrycode]{countrycode_data}}
+  \code{\link[countrycode]{countrycode}}
 }
 \examples{
 
