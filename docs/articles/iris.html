@@ -8,8 +8,11 @@
 <title>Illustration of PCAviz on Iris data • PCAviz</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Illustration of PCAviz on Iris data">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -59,7 +62,7 @@
     <div class="page-header toc-ignore">
       <h1>Illustration of PCAviz on Iris data</h1>
             
-            <h4 class="date">2017-06-11</h4>
+            <h4 class="date">2019-09-20</h4>
           </div>
 
     
@@ -76,12 +79,12 @@
 <a href="#load-the-data-and-compute-the-pcs" class="anchor"></a>Load the data and compute the PCs</h2>
 <p>Load the Iris data. Here, we add an “id” column to the table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
-iris &lt;-<span class="st"> </span><span class="kw">cbind</span>(iris,<span class="kw">data.frame</span>(<span class="dt">id =</span> <span class="dv">1</span>:<span class="dv">150</span>))
+iris &lt;-<span class="st"> </span><span class="kw">cbind</span>(iris,<span class="kw">data.frame</span>(<span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
 iris &lt;-<span class="st"> </span><span class="kw">transform</span>(iris,<span class="dt">id =</span> <span class="kw">as.character</span>(id))</code></pre></div>
 <p>Compute principal components using <code>prcomp</code> (alternatively, you may use <code>princomp</code> or <code>rpca</code> from the <code>rsvd</code> package).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># out.pca &lt;- princomp(iris[1:4])</span>
 <span class="co"># out.pca &lt;- rpca(iris[1:4],k = 4,center = TRUE,scale = FALSE,retx = TRUE)</span>
-out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span class="dv">1</span>:<span class="dv">4</span>])</code></pre></div>
+out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</code></pre></div>
 <p>Create the “pcaviz” object from the Iris data and the computed PCs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pcaviz.html">pcaviz</a></span>(out.pca,<span class="dt">dat =</span> iris)</code></pre></div>
 <p>The first PC captures over 90% of the total variance in the Iris samples.</p>
@@ -99,7 +102,7 @@ out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span 
 </p>
 </div>
 <p>Scale the PCs, then rotate the first two PCs by 15 degrees.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pcaviz-plots.html">pcaviz_reduce_whitespace</a></span>(iris) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pcaviz-plots.html">pcaviz_reduce_whitespace</a></span>(iris) <span class="op">%&gt;%</span>
 <span class="st">        </span><span class="kw"><a href="../reference/pcaviz-transformations.html">pcaviz_rotate</a></span>(<span class="dv">15</span>)</code></pre></div>
 <p>Print out a summary of the PCA results and accompanying Iris data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(iris)
@@ -130,32 +133,36 @@ out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span 
 <a href="#create-visualizations-of-the-iris-pca-results" class="anchor"></a>Create visualizations of the Iris PCA results</h2>
 <p>Calling <code>plot</code> without any additional options shows the samples projected onto the first two PCs, labeled by Species. The large circles represent the group summaries (that is, the median PC projection for each of the three Iris species). Also observe that an abbreviated label is automatically created.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris)
-<span class="co"># Abbreviations used in plot:</span>
-<span class="co">#  Species    Species.abbrv</span>
-<span class="co">#  setosa     st           </span>
-<span class="co">#  versicolor vr           </span>
-<span class="co">#  virginica  ca</span></code></pre></div>
+<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="iris_files/figure-html/unnamed-chunk-10-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
  
 </p>
 </div>
+<pre><code># Abbreviations used in plot:
+#  Species    Species.abbrv
+#  setosa     st           
+#  versicolor vr           
+#  virginica  gn</code></pre>
 <p>Setting <code>draw.points = TRUE</code> instead uses different colors and shapes to depict the “Species” assignment.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>)
+<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="iris_files/figure-html/unnamed-chunk-11-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
  
 </p>
 </div>
 <p>In the next plot, we use a color gradient to represent a continuous variable (Petal Length), and the sample ids are plotted instead of points.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">color =</span> <span class="st">"Petal.Length"</span>,<span class="dt">label =</span> <span class="st">"id"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">color =</span> <span class="st">"Petal.Length"</span>,<span class="dt">label =</span> <span class="st">"id"</span>)
+<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="iris_files/figure-html/unnamed-chunk-12-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
  
 </p>
 </div>
 <p>Show Petal Length as different colors, and Species as different shapes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,<span class="dt">color =</span> <span class="st">"Petal.Length"</span>,<span class="dt">shape =</span> <span class="st">"Species"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,<span class="dt">color =</span> <span class="st">"Petal.Length"</span>,<span class="dt">shape =</span> <span class="st">"Species"</span>)
+<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="iris_files/figure-html/unnamed-chunk-13-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
  
@@ -169,17 +176,18 @@ out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span 
 </p>
 </div>
 <p>The PCAviz plotting interface also allows for quickly plotting multiple combinations of PCs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">coords =</span> <span class="kw">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span>:<span class="dv">4</span>),<span class="dt">group =</span> <span class="ot">NULL</span>,<span class="dt">scale.pc.axes =</span> <span class="fl">0.6</span>)
-<span class="co"># Abbreviations used in plot:</span>
-<span class="co">#  Species    Species.abbrv</span>
-<span class="co">#  setosa     st           </span>
-<span class="co">#  versicolor vr           </span>
-<span class="co">#  virginica  ca</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">coords =</span> <span class="kw">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>),<span class="dt">group =</span> <span class="ot">NULL</span>,<span class="dt">scale.pc.axes =</span> <span class="fl">0.6</span>)
+<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="iris_files/figure-html/unnamed-chunk-15-1.png" alt="&amp;nbsp;" width="672"><p class="caption">
  
 </p>
 </div>
+<pre><code># Abbreviations used in plot:
+#  Species    Species.abbrv
+#  setosa     st           
+#  versicolor vr           
+#  virginica  gn</code></pre>
 <p>The PCAviz package has an easy-to-use interface for creating violin plots to visualize the relationship between PCs and categorical data variables. In this example, Species is compared against all four PCs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pcaviz-plots.html">pcaviz_violin</a></span>(iris)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -188,11 +196,12 @@ out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span 
 </p>
 </div>
 <p>One advantage of ggplot2 graphics is that it easily allows for combining plots; however, one has to take some care to ensure that the ggplot layers are evaluated correctly. Here we give an example of overlaying additional data on top of the PCAviz scatterplot (we use this additional layer in this example to highlight samples with unusually small or unusually large sepals). Note that the <code>inherit.aes = FALSE</code> option is needed, otherwise the code will generate an error.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">subset</span>(iris$data,Sepal.Width &lt;=<span class="st"> </span><span class="dv">2</span> |<span class="st"> </span>Sepal.Width &gt;=<span class="st"> </span><span class="dv">4</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">subset</span>(iris<span class="op">$</span>data,Sepal.Width <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span> <span class="op">|</span><span class="st"> </span>Sepal.Width <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>)
 dat &lt;-<span class="st"> </span><span class="kw">with</span>(dat,<span class="kw">data.frame</span>(<span class="dt">x =</span> PC1,<span class="dt">y =</span> PC2))
-<span class="kw">plot</span>(iris,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,<span class="dt">shape =</span> <span class="st">"Species"</span>,<span class="dt">group =</span> <span class="ot">NULL</span>) +
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> dat,<span class="kw">aes</span>(<span class="dt">x =</span> x,<span class="dt">y =</span> y),
-             <span class="dt">shape =</span> <span class="dv">1</span>,<span class="dt">size =</span> <span class="fl">5.5</span>,<span class="dt">inherit.aes =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw">plot</span>(iris,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,<span class="dt">shape =</span> <span class="st">"Species"</span>,<span class="dt">group =</span> <span class="ot">NULL</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="dt">data =</span> dat,<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x,<span class="dt">y =</span> y),
+             <span class="dt">shape =</span> <span class="dv">1</span>,<span class="dt">size =</span> <span class="fl">5.5</span>,<span class="dt">inherit.aes =</span> <span class="ot">FALSE</span>)
+<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="iris_files/figure-html/unnamed-chunk-17-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
  
@@ -202,7 +211,8 @@ dat &lt;-<span class="st"> </span><span class="kw">with</span>(dat,<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_plotly &lt;-<span class="st"> </span><span class="kw">plot</span>(iris,<span class="dt">plotly =</span> <span class="ot">TRUE</span>,
                     <span class="dt">tooltip =</span> <span class="kw">c</span>(<span class="st">"id"</span>,<span class="st">"Species"</span>,<span class="st">"Sepal.Length"</span>,<span class="st">"Sepal.Width"</span>,
                                 <span class="st">"Petal.Length"</span>,<span class="st">"Petal.Width"</span>),
-                    <span class="dt">plotly.file =</span> <span class="st">"iris_plotly.html"</span>)</code></pre></div>
+                    <span class="dt">plotly.file =</span> <span class="st">"iris_plotly.html"</span>)
+<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <p>Note that the interactive plot can also be easily embedded within this document. In this example we have placed it in a separate webpage because loading the JavaScript can be slow in some browsers.</p>
 </div>
 </div>
@@ -210,7 +220,8 @@ dat &lt;-<span class="st"> </span><span class="kw">with</span>(dat,<span class="
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#load-the-data-and-compute-the-pcs">Load the data and compute the PCs</a></li>
       <li><a href="#create-visualizations-of-the-iris-pca-results">Create visualizations of the Iris PCA results</a></li>
@@ -226,7 +237,7 @@ dat &lt;-<span class="st"> </span><span class="kw">with</span>(dat,<span class="
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

@@ -18,14 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+  
+  
+<meta property="og:title" content="Generate abbreviated strings — create_abbreviated_label" />
 
+<meta property="og:description" content="Generate abbreviated strings, allowing for both a
+customized abbreviation (e.g., specific to country names) and a generic
+abbreviation." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -88,7 +97,9 @@ customized abbreviation (e.g., specific to country names) and a generic
 abbreviation.</p>
     
 
-    <pre><span class='fu'>create_abbreviated_label</span>(<span class='no'>x</span>, <span class='kw'>abbrv.generic</span> <span class='kw'>=</span> <span class='no'>abbreviate</span>, <span class='kw'>abbrv.custom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>create_abbreviated_label</span>(<span class='no'>x</span>,
+  <span class='kw'>abbrv.generic</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>abbreviate</span>(<span class='fu'>gsub</span>(<span class='st'>"[^[:alnum:] ]"</span>,<span class='st'>""</span>,<span class='no'>x</span>)),
+  <span class='kw'>abbrv.custom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -101,7 +112,9 @@ abbreviation.</p>
       <th>abbrv.generic</th>
       <td><p>Function accepting a single argument that returns
   a character vector containing abbreviations for the character strings
-  in its first (and only) argument.</p></td>
+  in its first (and only) argument. The default calls the
+  <code>abbreviate</code> function after first removing all
+  non-alphanumeric characters.</p></td>
     </tr>
     <tr>
       <th>abbrv.custom</th>
@@ -138,8 +151,8 @@ abbreviation.</p>
   <span class='co'># Function create_abbreviated_label can be applied to a factor or a</span>
   <span class='co'># character vector.</span>
   <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"Quebec"</span>,<span class='st'>"Alberta"</span>,<span class='st'>"Ontario"</span>,<span class='st'>"Alberta"</span>,<span class='st'>"Yukon"</span>)
-  <span class='fu'>create_abbreviated_label</span>(<span class='no'>x</span>,<span class='kw'>abbrv.custom</span> <span class='kw'>=</span> <span class='no'>canada.post.abbrv</span>)</div><div class='output co'>#&gt;   QC   AB   ON   AB   YT 
-#&gt; "QC" "AB" "ON" "AB" "YT" </div><div class='input'>  <span class='fu'>create_abbreviated_label</span>(<span class='fu'>factor</span>(<span class='no'>x</span>),<span class='kw'>abbrv.custom</span> <span class='kw'>=</span> <span class='no'>canada.post.abbrv</span>)</div><div class='output co'>#&gt; [1] QC AB ON AB YT
+  <span class='fu'>create_abbreviated_label</span>(<span class='no'>x</span>,<span class='kw'>abbrv.custom</span> <span class='kw'>=</span> <span class='no'>canada.post.abbrv</span>)</div><div class='output co'>#&gt;  Quebec Alberta Ontario Alberta   Yukon 
+#&gt;    "QC"    "AB"    "ON"    "AB"    "YT" </div><div class='input'>  <span class='fu'>create_abbreviated_label</span>(<span class='fu'>factor</span>(<span class='no'>x</span>),<span class='kw'>abbrv.custom</span> <span class='kw'>=</span> <span class='no'>canada.post.abbrv</span>)</div><div class='output co'>#&gt; [1] QC AB ON AB YT
 #&gt; Levels: AB ON QC YT</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -165,7 +178,7 @@ abbreviation.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

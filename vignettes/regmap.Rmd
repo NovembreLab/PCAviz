@@ -16,7 +16,7 @@ although some overlap is evident.
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(collapse = TRUE,comment = "#",fig.width = 6,
                       fig.height = 5,fig.align = "center",
-                      fig.cap = "&nbsp;")
+                      fig.cap = "&nbsp;",results = "hold")
 ```
 
 Begin by loading these packages into your R environment.

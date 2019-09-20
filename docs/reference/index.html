@@ -18,14 +18,18 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
+<meta property="og:title" content="Function reference" />
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -79,8 +83,10 @@
       <div class="row">
   <div class="col-md-9">
     <div class="page-header">
-      <h1>Function reference</h1>
-      <h4>version&nbsp;0.3-27</h4>
+      <h1>
+        Reference
+        <small>version&nbsp;0.3-33</small>
+      </h1>
     </div>
 
     <div class="contents">
@@ -107,43 +113,43 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="pcaviz-maps.html">pcaviz-maps</a></code> <code><a href="pcaviz-maps.html">pcaviz-map</a></code> <code><a href="pcaviz-maps.html">overlay_map_world</a></code> <code><a href="pcaviz-maps.html">overlay_map_europe</a></code> <code><a href="pcaviz-maps.html">overlay_map_usa</a></code> </p>
+            <p><code><a href="pcaviz-maps.html">overlay_map_world</a></code> <code><a href="pcaviz-maps.html">overlay_map_europe</a></code> <code><a href="pcaviz-maps.html">overlay_map_usa</a></code> </p>
           </td>
           <td><p>PCAviz maps</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="pcaviz-package.html">PCAviz-package</a></code> <code><a href="pcaviz-package.html">pcaviz-package</a></code> <code><a href="pcaviz-package.html">PCAviz</a></code> </p>
+            <p><code><a href="pcaviz-package.html">PCAviz-package</a></code> </p>
           </td>
           <td><p>Visualizing Principal Component Analysis</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="pcaviz-plots.html">pcaviz-plots</a></code> <code><a href="pcaviz-plots.html">pcaviz-plot</a></code> <code><a href="pcaviz-plots.html">pcaviz-plotting</a></code> <code><a href="pcaviz-plots.html">pcaviz_colors_categorical</a></code> <code><a href="pcaviz-plots.html">pcaviz_colors_continuous</a></code> <code><a href="pcaviz-plots.html">pcaviz_shapes</a></code> <code><a href="pcaviz-plots.html">plot.pcaviz</a></code> <code><a href="pcaviz-plots.html">screeplot.pcaviz</a></code> <code><a href="pcaviz-plots.html">pcaviz_loadingsplot</a></code> <code><a href="pcaviz-plots.html">pcaviz_violin</a></code> <code><a href="pcaviz-plots.html">theme_pcaviz</a></code> <code><a href="pcaviz-plots.html">pcaviz_reduce_whitespace</a></code> <code><a href="pcaviz-plots.html">pcaviz_abbreviate_var</a></code> <code><a href="pcaviz-plots.html">pcaviz_summary_default</a></code> </p>
+            <p><code><a href="pcaviz-plots.html">pcaviz-plots</a></code> </p>
           </td>
           <td><p>Plot pcaviz objects</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="pcaviz-transformations.html">pcaviz-transformations</a></code> <code><a href="pcaviz-transformations.html">pcaviz-transformation</a></code> <code><a href="pcaviz-transformations.html">matrix-transformations</a></code> <code><a href="pcaviz-transformations.html">matrix-transformation</a></code> <code><a href="pcaviz-transformations.html">pcaviz_rotate</a></code> <code><a href="pcaviz-transformations.html">pcaviz_reflect</a></code> <code><a href="pcaviz-transformations.html">pcaviz_scale</a></code> <code><a href="pcaviz-transformations.html">pcaviz_translate</a></code> <code><a href="pcaviz-transformations.html">pcaviz_transform2d</a></code> <code><a href="pcaviz-transformations.html">matrix_rotate</a></code> <code><a href="pcaviz-transformations.html">matrix_reflect</a></code> <code><a href="pcaviz-transformations.html">matrix_scale</a></code> <code><a href="pcaviz-transformations.html">matrix_translate</a></code> <code><a href="pcaviz-transformations.html">matrix_transform2d</a></code> </p>
+            <p><code><a href="pcaviz-transformations.html">pcaviz_rotate</a></code> <code><a href="pcaviz-transformations.html">pcaviz_reflect</a></code> <code><a href="pcaviz-transformations.html">pcaviz_scale</a></code> <code><a href="pcaviz-transformations.html">pcaviz_translate</a></code> <code><a href="pcaviz-transformations.html">pcaviz_transform2d</a></code> <code><a href="pcaviz-transformations.html">matrix_rotate</a></code> <code><a href="pcaviz-transformations.html">matrix_reflect</a></code> <code><a href="pcaviz-transformations.html">matrix_scale</a></code> <code><a href="pcaviz-transformations.html">matrix_translate</a></code> <code><a href="pcaviz-transformations.html">matrix_transform2d</a></code> </p>
           </td>
           <td><p>Transformations of principal components</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="pcaviz.html">pcaviz</a></code> <code><a href="pcaviz.html">summary.pcaviz</a></code> <code><a href="pcaviz.html">print.pcaviz</a></code> <code><a href="pcaviz.html">print.summary.pcaviz</a></code> </p>
+            <p><code><a href="pcaviz.html">pcaviz</a></code> </p>
           </td>
           <td><p>Create and summarize pcaviz objects</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="popres.html">popres</a></code> </p>
+            <p><code><a href="popres.html">data</a></code> </p>
           </td>
           <td><p>Principal components analysis of genetic variation in POPRES sample</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="regmap.html">regmap</a></code> </p>
+            <p><code><a href="regmap.html">data</a></code> </p>
           </td>
           <td><p>Principal components analysis of A. thaliana RegMap data</p></td>
         </tr><tr>
@@ -172,7 +178,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

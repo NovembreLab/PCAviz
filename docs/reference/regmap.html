@@ -18,14 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+  
+  
+<meta property="og:title" content="Principal components analysis of A. thaliana RegMap data — regmap" />
 
+<meta property="og:description" content="Data on 1,307 Arabidopsis thaliana accessions collected around
+  the world. Data include geographic co-ordinates and results of
+  applying principal components analysis (PCA) to genotypes
+  at 214,051 single nucleotide polymorphisms (SNPs)." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,7 +99,7 @@
   at 214,051 single nucleotide polymorphisms (SNPs).</p>
     
 
-    <pre><span class='fu'>data</span>(<span class='no'>regmap</span>)</pre>
+    <pre class="usage"><span class='fu'>data</span>(<span class='no'>regmap</span>)</pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
@@ -103,7 +113,7 @@
 
     <p><em>Arabidopsis thaliana</em> SNP genotypes were obtained from the
   website of Joy Bergelson's lab at the University of Chicago,
-  <a href = 'http://bergelson.uchicago.edu/?page_id=790'>http://bergelson.uchicago.edu/?page_id=790</a>.</p>
+  <a href='http://bergelson.uchicago.edu/?page_id=790'>http://bergelson.uchicago.edu/?page_id=790</a>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -143,10 +153,10 @@
 #&gt; 4  46.185  -1.223   1.5694 -15.35  -2.364  -4.185
 #&gt; 5 -12.844   1.417   5.9657  23.06  -3.204 -23.093
 #&gt; 6  46.365  -2.152 -10.4390 -20.77  10.236  -1.030</div><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # See the vignette for more examples.</span>
-<span class='co'># vignette("regmap")</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># See the vignette for more examples.</span>
+<span class='fu'>vignette</span>(<span class='st'>"regmap"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -172,7 +182,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

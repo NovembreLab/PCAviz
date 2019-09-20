@@ -18,14 +18,21 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+  
+  
+<meta property="og:title" content="PCAviz maps — pcaviz-maps" />
 
+<meta property="og:description" content=""Overlays" for adding maps to existing ggplots." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -86,7 +93,7 @@
     <p>"Overlays" for adding maps to existing ggplots.</p>
     
 
-    <pre><span class='fu'>overlay_map_world</span>(<span class='no'>g</span>)
+    <pre class="usage"><span class='fu'>overlay_map_world</span>(<span class='no'>g</span>)
   <span class='fu'>overlay_map_europe</span>(<span class='no'>g</span>)
   <span class='fu'>overlay_map_usa</span>(<span class='no'>g</span>)</pre>
     
@@ -113,18 +120,17 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>pcaviz-maps,
-  <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/map_data'>map_data</a></code>,
+  <code><a href='https://ggplot2.tidyverse.org/reference/map_data.html'>map_data</a></code>,
   <code><a href='http://www.rdocumentation.org/packages/maps/topics/world'>world</a></code>,
   <code><a href='http://www.rdocumentation.org/packages/maps/topics/usa'>usa</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># </span>
-<span class='co'># # See the POPRES vignette for some examples of how these functions are</span>
-<span class='co'># # used to add maps to PCAviz plots.</span>
-<span class='co'># vignette("popres")</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># See the POPRES vignette for some examples of how these functions are</span>
+<span class='co'># used to add maps to PCAviz plots.</span>
+<span class='fu'>vignette</span>(<span class='st'>"popres"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -149,7 +155,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

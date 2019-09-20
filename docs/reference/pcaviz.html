@@ -18,14 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+  
+  
+<meta property="og:title" content="Create and summarize pcaviz objects — pcaviz" />
 
+<meta property="og:description" content="Creates a "pcaviz" data structure from PCA results (e.g.,
+  prcomp output, and accompanying data. The data
+  structure is specifically designed to facilitate plotting PCA results
+  and relationships between estimated principal components and related
+  data (e.g., geographic co-ordinates)." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -90,7 +101,7 @@
   data (e.g., geographic co-ordinates).</p>
     
 
-    <pre>pcaviz(out.pca, x = NULL, sdev = NULL, var = NULL, rotation = NULL,
+    <pre class="usage">pcaviz(out.pca, x = NULL, sdev = NULL, var = NULL, rotation = NULL,
        dat = NULL, pc.cols)
 
 # S3 method for pcaviz
@@ -193,7 +204,9 @@ print(x, n = 4, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>pcaviz</code> returns a list with class <code>"pcaviz"</code> containing the
+    
+  
+<p><code>pcaviz</code> returns a list with class <code>"pcaviz"</code> containing the
   following components:</p>
 <p></p>
 <dt>data</dt><dd><p>Data frame containing the rotated variables as well as
@@ -219,8 +232,8 @@ print(x, n = 4, &#8230;)</pre>
   It is advised to avoid directly manipulating these components as much
   as possible. Instead, it is preferrable to use package functions
   designed for manipulating pcaviz objects, e.g.,
-  subset, pcaviz_rotate,
-  pcaviz_abbreviate_var.
+  <a href='subset.pcaviz.html'>subset</a>, <a href='pcaviz-transformations.html'>pcaviz_rotate</a>,
+  <a href='pcaviz-plots.html'>pcaviz_abbreviate_var</a>.
 
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -242,21 +255,18 @@ print(x, n = 4, &#8230;)</pre>
 <span class='co'># An alternative way to create pcaviz object from prcomp output.</span>
 <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>prcomp</span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>4</span>])
 <span class='no'>a3</span>  <span class='kw'>&lt;-</span> <span class='fu'>pcaviz</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>out</span>$<span class='no'>x</span>,<span class='kw'>sdev</span> <span class='kw'>=</span> <span class='no'>out</span>$<span class='no'>sdev</span>,<span class='kw'>var</span> <span class='kw'>=</span> <span class='fu'>sum</span>(<span class='no'>out</span>$<span class='no'>sdev</span>^<span class='fl'>2</span>),
-              <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='no'>out</span>$<span class='no'>rotation</span>,<span class='kw'>dat</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+              <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='no'>out</span>$<span class='no'>rotation</span>,<span class='kw'>dat</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><span class='co'># NOT RUN {</span>
+<span class='co'># Print summaries of the pcaviz objects.</span>
+<span class='fu'>summary</span>(<span class='no'>a1</span>)
+<span class='fu'>summary</span>(<span class='no'>a2</span>)
+<span class='fu'>summary</span>(<span class='no'>a3</span>)
 
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># </span>
-<span class='co'># # Print summaries of the pcaviz objects.</span>
-<span class='co'># summary(a1)</span>
-<span class='co'># summary(a2)</span>
-<span class='co'># summary(a3)</span>
-<span class='co'># </span>
-<span class='co'># # These vignettes demonstrate various ways pcaviz objects</span>
-<span class='co'># # can be created.</span>
-<span class='co'># vignette("iris")</span>
-<span class='co'># vignette("popres")</span>
-<span class='co'># vignette("regmap")</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='co'># These vignettes demonstrate various ways pcaviz objects</span>
+<span class='co'># can be created.</span>
+<span class='fu'>vignette</span>(<span class='st'>"iris"</span>)
+<span class='fu'>vignette</span>(<span class='st'>"popres"</span>)
+<span class='fu'>vignette</span>(<span class='st'>"regmap"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -279,7 +289,7 @@ print(x, n = 4, &#8230;)</pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

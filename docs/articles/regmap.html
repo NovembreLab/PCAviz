@@ -8,8 +8,11 @@
 <title>Illustration of PCAviz on RegMap data • PCAviz</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Illustration of PCAviz on RegMap data">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -59,7 +62,7 @@
     <div class="page-header toc-ignore">
       <h1>Illustration of PCAviz on RegMap data</h1>
             
-            <h4 class="date">2017-06-11</h4>
+            <h4 class="date">2019-09-20</h4>
           </div>
 
     
@@ -68,13 +71,14 @@
 <p>This vignette illustrates PCAviz for visualizing principal components in the Regmap data set. The first two PCs of the genotype data distinguish geographic origins of the <em>Arabidopsis thaliana</em> samples, although some overlap is evident.</p>
 <p>Begin by loading these packages into your R environment.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PCAviz)
-<span class="kw">library</span>(cowplot)</code></pre></div>
+<span class="kw">library</span>(cowplot)
+<span class="co"># Warning: package 'cowplot' was built under R version 3.4.4</span></code></pre></div>
 <div id="load-the-data-and-pca-results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-the-data-and-pca-results" class="anchor"></a>Load the data and PCA results</h2>
 <p>Load the RegMap data and the computed PCs, and convert these data to a “pcaviz” object. (We do not include the “region” column.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(regmap)
-regmap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pcaviz.html">pcaviz</a></span>(<span class="dt">dat =</span> regmap[-<span class="dv">10</span>])</code></pre></div>
+regmap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pcaviz.html">pcaviz</a></span>(<span class="dt">dat =</span> regmap[<span class="op">-</span><span class="dv">10</span>])</code></pre></div>
 <p>Print a summary of the RegMap data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(regmap)
 <span class="co"># first 4 (of 10) principal components (PCs): </span>
@@ -128,7 +132,7 @@ regmap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pcav
 <p>By setting the <code>color</code> argument to “longitude” and “latitude”, these next two plots help us understand the relationship between geography and projection onto the PC embedding.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot1 &lt;-<span class="st"> </span><span class="kw">plot</span>(regmap,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,<span class="dt">color =</span> <span class="st">"longitude"</span>,<span class="dt">group =</span> <span class="ot">NULL</span>)
 plot2 &lt;-<span class="st"> </span><span class="kw">plot</span>(regmap,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,<span class="dt">color =</span> <span class="st">"latitude"</span>,<span class="dt">group =</span> <span class="ot">NULL</span>)
-<span class="kw">plot_grid</span>(plot1,plot2,<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>))</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/cowplot/topics/plot_grid">plot_grid</a></span>(plot1,plot2,<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>))</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="regmap_files/figure-html/unnamed-chunk-8-1.png" alt="&amp;nbsp;" width="672"><p class="caption">
  
@@ -143,7 +147,7 @@ plot2 &lt;-<span class="st"> </span><span class="kw">plot</span>(regmap,<span cl
 </p>
 </div>
 <p>The <code>plot</code> function can also be used to quickly plot combinations of PCs. This code also illustrates customization of the plotting parameters—in this case, since the plots are small, the default point size is a bit too large.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(regmap,<span class="dt">coords =</span> <span class="kw">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span>:<span class="dv">4</span>),<span class="dt">group =</span> <span class="ot">NULL</span>,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(regmap,<span class="dt">coords =</span> <span class="kw">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>),<span class="dt">group =</span> <span class="ot">NULL</span>,<span class="dt">draw.points =</span> <span class="ot">TRUE</span>,
      <span class="dt">geom.point.params =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="dv">1</span>,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="regmap_files/figure-html/unnamed-chunk-10-1.png" alt="&amp;nbsp;" width="672"><p class="caption">
@@ -156,7 +160,8 @@ plot2 &lt;-<span class="st"> </span><span class="kw">plot</span>(regmap,<span cl
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#load-the-data-and-pca-results">Load the data and PCA results</a></li>
       <li><a href="#create-visualizations-of-the-regmap-pca-results">Create visualizations of the RegMap PCA results</a></li>
@@ -172,7 +177,7 @@ plot2 &lt;-<span class="st"> </span><span class="kw">plot</span>(regmap,<span cl
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

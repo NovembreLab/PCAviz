@@ -8,8 +8,17 @@
 <title>Visualizing Principal Components Analysis • PCAviz</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Visualizing Principal Components Analysis">
+<meta property="og:description" content="The 'PCAviz' package provides a simple interface for
+    quickly creating visually compelling plots from Principal
+    Components Analysis (PCA) and accompanying data. See the vignettes
+    included in this package for examples of plots generated with the
+    'PCAviz' package. The plotting functions are also suitable for other
+    dimensionality reduction techniques such as Multidimensional Scaling
+    (MDS) and Local Linear Embedding (LLE).">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -63,10 +72,14 @@
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quick-start" class="anchor"></a>Quick start</h2>
-<p>Install and test the latest version of the PCAviz package:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> CMD build --resave-data PCAviz
-<span class="ex">R</span> CMD check --as-cran PCAviz_0.3-27.tar.gz
-<span class="ex">R</span> CMD INSTALL PCAviz_0.3-27.tar.gz</code></pre></div>
+<p>Install the most recent version of the PCAviz package using devtools:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"NovembreLab/PCAviz"</span>,<span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Alternatively, to install and test PCAviz, run the following commands in the shell:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> CMD build PCAviz
+<span class="ex">R</span> CMD check --as-cran PCAviz_0.3-33.tar.gz
+<span class="ex">R</span> CMD INSTALL PCAviz_0.3-33.tar.gz</code></pre></div>
+<p>Note that these commands require that the dependencies have already been installed. See the <a href="DESCRIPTION" class="uri">DESCRIPTION</a> file for details.</p>
 <p>Load PCAviz into the R environment, and get an overview of the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PCAviz)
 <span class="kw">help</span>(<span class="dt">package =</span> PCAviz)</code></pre></div>
@@ -80,7 +93,7 @@
 <a href="#how-to-build-static-html-documentation" class="anchor"></a>How to build static HTML documentation</h2>
 <p>These are the R commands to build the website (make sure you are connected to Internet while running these commands):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pkgdown)
-<span class="kw">build_site</span>(<span class="dt">mathjax =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>(<span class="dt">mathjax =</span> <span class="ot">FALSE</span>)</code></pre></div>
 </div>
 <div id="whats-included" class="section level2">
 <h2 class="hasAnchor">
@@ -132,13 +145,17 @@
 </ul>
 <h2>License</h2>
 <p>GPL (&gt;= 3)</p>
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing PCAviz</a></li>
+</ul>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>John Novembre <br><small class="roles"> Author, maintainer </small> </li>
-<li>Richard Williams <br><small class="roles"> Author </small> </li>
-<li>Hossein Pourreza <br><small class="roles"> Author </small> </li>
-<li>Yuexi Wang <br><small class="roles"> Author </small> </li>
-<li>Peter Carbonetto <br><small class="roles"> Author </small> </li>
+<li>John Novembre <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Richard Williams <br><small class="roles"> Author </small>  </li>
+<li>Hossein Pourreza <br><small class="roles"> Author </small>  </li>
+<li>Yuexi Wang <br><small class="roles"> Author </small>  </li>
+<li>Peter Carbonetto <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 </div>
@@ -149,7 +166,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

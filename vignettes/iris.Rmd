@@ -16,7 +16,7 @@ of plotting options in the PCAviz package.
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(collapse = TRUE,comment = "#",fig.width = 5,
                       fig.height = 4,fig.align = "center",
-                      fig.cap = "&nbsp;")
+                      fig.cap = "&nbsp;",results = "hold")
 ```
 
 Begin by loading these packages into your R environment. 
