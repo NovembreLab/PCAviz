@@ -100,7 +100,7 @@ test_that("pcaviz_abbreviate_var() provides correct country abbreviations",{
 test_that("screeplot() does not produce an error on Iris data",{
   data(iris)
   iris <- pcaviz(prcomp(iris[1:4]),dat = iris)
-  expect_silent(screeplot(iris))
+  expect_s3_class(screeplot(iris),"ggplot")
 })
 
 # ----------------------------------------------------------------------
@@ -115,7 +115,7 @@ test_that("screeplot() generates error when s.d.'s are not provided",{
 test_that("pcaviz_violin() does not produce an error on Iris data",{
   data(iris)
   iris <- pcaviz(prcomp(iris[1:4]),dat = iris)
-  expect_silent(pcaviz_violin(iris))
+  expect_s3_class(pcaviz_violin(iris),"ggplot")
 })
 
 # ----------------------------------------------------------------------
@@ -127,28 +127,29 @@ test_that(paste("plot.pcaviz() generates a variety of plots from Iris",
   iris <- pcaviz(prcomp(iris[1:4]),dat = iris)
 
   # Show "Species" as different colors and shapes.
-  expect_silent(plot(iris,draw.points = TRUE))
+  expect_s3_class(plot(iris,draw.points = TRUE),"ggplot")
 
   # Show a continuous variable (Petal Width) in different colors.
-  expect_silent(plot(iris,draw.points = TRUE,color = "Petal.Width",
-                     shape = "Species"))
+  expect_s3_class(plot(iris,draw.points = TRUE,color = "Petal.Width",
+                       shape = "Species"),"ggplot")
   
   # Draw the rotated PC axes.
   iris.rot <- pcaviz_reduce_whitespace(iris)
   iris.rot <- pcaviz_rotate(iris.rot,15)
-  expect_silent(plot(iris.rot,draw.points = TRUE,preserve.scale = TRUE))
+  expect_s3_class(plot(iris.rot,draw.points = TRUE,preserve.scale = TRUE),
+                  "ggplot")
 
   # Plot PC1 vs. Petal Width, with lines showing the linear fit and
   # confidence interval.
-  expect_silent(plot(iris.rot,coords = c("PC1","Petal.Width"),
-                     draw.points = TRUE))
+  expect_s3_class(plot(iris.rot,coords = c("PC1","Petal.Width"),
+                       draw.points = TRUE),"ggplot")
 
   # Plot all combinations of PCs 1-4.
-  expect_silent(plot(iris.rot,coords = paste0("PC",1:4),draw.points = TRUE,
-                     group = NULL,scale.pc.axes = 0.7))
+  expect_s3_class(plot(iris.rot,coords = paste0("PC",1:4),draw.points = TRUE,
+                       group = NULL,scale.pc.axes = 0.7),"ggplot")
 
   # Label all data points by their sample id.
-  expect_silent(plot(iris,label = "id"))
+  expect_s3_class(plot(iris,label = "id"),"ggplot")
 
   # Label all data points by "Species" assignment, using an
   # abbreviated label.
@@ -162,5 +163,5 @@ test_that(paste("plot.pcaviz(plotly = TRUE) generates interactive plot",
   iris <- cbind(iris,data.frame(id = 1:150))
   iris <- transform(iris,id = as.character(id))
   iris <- pcaviz(prcomp(iris[1:4]),dat = iris)
-  expect_silent(plot(iris,plotly = TRUE,tooltip = "id"))
+  expect_s3_class(plot(iris,plotly = TRUE,tooltip = "id"),"plotly")
 })
