@@ -21,12 +21,15 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Principal components analysis of A. thaliana RegMap data — regmap" />
 
 <meta property="og:description" content="Data on 1,307 Arabidopsis thaliana accessions collected around
@@ -34,6 +37,9 @@
   applying principal components analysis (PCA) to genotypes
   at 214,051 single nucleotide polymorphisms (SNPs)." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +62,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">PCAviz</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">PCAviz</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.34</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -79,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -86,18 +97,22 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Principal components analysis of A. thaliana RegMap data</h1>
+    
+    <div class="hidden name"><code>regmap.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Data on 1,307 <em>Arabidopsis thaliana</em> accessions collected around
   the world. Data include geographic co-ordinates and results of
   applying principal components analysis (PCA) to genotypes
   at 214,051 single nucleotide polymorphisms (SNPs).</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>data</span>(<span class='no'>regmap</span>)</pre>
         
@@ -133,26 +148,26 @@
 <span class='co'># View the first few data samples.</span>
 <span class='fu'>data</span>(<span class='no'>regmap</span>)
 <span class='fu'>head</span>(<span class='no'>regmap</span>)</div><div class='output co'>#&gt;   array_id ecotype_id median_intensity latitude longitude nativename firstname
-#&gt; 1      641       9381              476    55.81     14.21      Fri 1    Alison
-#&gt; 2      642       9380              556    55.75     13.37     FlyA 3    Alison
-#&gt; 3      643       9378              542    63.02     18.32      FaU 4    Alison
-#&gt; 4      644       9371              478    63.02     18.32      FaL 1    Alison
-#&gt; 5      645       9367              560    57.68     15.00      EkN 3    Alison
-#&gt; 6      646       9363              363    62.91     18.40      EdJ 2    Alison
-#&gt;     surname            site   region country    PC1     PC2    PC3    PC4
-#&gt; 1 Anastasio       Frisaboda S Sweden     SWE -27.76  34.484  6.258 -2.040
-#&gt; 2 Anastasio         Flyinge S Sweden     SWE -20.18  34.954 15.606 -6.110
-#&gt; 3 Anastasio  Faberget-Upper N Sweden     SWE -56.76  89.701  9.092 11.483
-#&gt; 4 Anastasio  Faberget-Lower N Sweden     SWE -55.64  88.580  8.069  9.981
-#&gt; 5 Anastasio Eksjoholm-Norra C Sweden     SWE -38.55   6.197 -6.996 -5.794
-#&gt; 6 Anastasio    Edsattersjon N Sweden     SWE -60.68 109.877 16.130 13.553
-#&gt;       PC5     PC6      PC7    PC8     PC9    PC10
-#&gt; 1  -6.575  -1.444   2.2803  25.62 -10.911  18.614
-#&gt; 2 -99.281 -44.441 -38.4179 -40.01  24.640   6.548
-#&gt; 3  46.634  -1.500   0.0836 -14.24  -3.090  -6.131
-#&gt; 4  46.185  -1.223   1.5694 -15.35  -2.364  -4.185
-#&gt; 5 -12.844   1.417   5.9657  23.06  -3.204 -23.093
-#&gt; 6  46.365  -2.152 -10.4390 -20.77  10.236  -1.030</div><div class='input'>
+#&gt; 1      641       9381              476  55.8106   14.2091      Fri 1    Alison
+#&gt; 2      642       9380              556  55.7488   13.3742     FlyA 3    Alison
+#&gt; 3      643       9378              542  63.0165   18.3174      FaU 4    Alison
+#&gt; 4      644       9371              478  63.0160   18.3175      FaL 1    Alison
+#&gt; 5      645       9367              560  57.6787   14.9981      EkN 3    Alison
+#&gt; 6      646       9363              363  62.9147   18.4045      EdJ 2    Alison
+#&gt;     surname            site   region country      PC1      PC2     PC3     PC4
+#&gt; 1 Anastasio       Frisaboda S Sweden     SWE -27.7564  34.4838  6.2580 -2.0400
+#&gt; 2 Anastasio         Flyinge S Sweden     SWE -20.1760  34.9538 15.6064 -6.1097
+#&gt; 3 Anastasio  Faberget-Upper N Sweden     SWE -56.7601  89.7009  9.0919 11.4833
+#&gt; 4 Anastasio  Faberget-Lower N Sweden     SWE -55.6441  88.5797  8.0689  9.9808
+#&gt; 5 Anastasio Eksjoholm-Norra C Sweden     SWE -38.5506   6.1973 -6.9958 -5.7941
+#&gt; 6 Anastasio    Edsattersjon N Sweden     SWE -60.6846 109.8771 16.1302 13.5530
+#&gt;        PC5      PC6      PC7      PC8      PC9     PC10
+#&gt; 1  -6.5748  -1.4439   2.2803  25.6212 -10.9108  18.6137
+#&gt; 2 -99.2813 -44.4414 -38.4179 -40.0077  24.6401   6.5482
+#&gt; 3  46.6343  -1.4997   0.0836 -14.2385  -3.0902  -6.1308
+#&gt; 4  46.1855  -1.2229   1.5694 -15.3463  -2.3640  -4.1847
+#&gt; 5 -12.8444   1.4173   5.9657  23.0560  -3.2038 -23.0929
+#&gt; 6  46.3648  -2.1523 -10.4390 -20.7712  10.2359  -1.0296</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># See the vignette for more examples.</span>
 <span class='fu'>vignette</span>(<span class='st'>"regmap"</span>)
@@ -188,5 +203,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -56,7 +56,7 @@
   \method{screeplot}{pcaviz}(x, type = c("var","pve","eigenvalue"),
     geom.point.params = list(size = 2,stroke = 1,color = "black",na.rm = TRUE),
     geom.line.params = list(size = 1,color = "black",na.rm = TRUE),
-    theme = theme_pcaviz(), plot.title = NULL, \ldots)
+    theme = theme_pcaviz(), plot.title = NULL, \dots)
 
   pcaviz_loadingsplot(x, pc.dim, color, colors, add.labels, min.rank = 0,
      gap = 0, geom.point.params = list(size = 1,na.rm = TRUE),

@@ -21,18 +21,24 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Principal components analysis of genetic variation in POPRES sample — popres" />
 
 <meta property="og:description" content="Data on 1,387 European subjects from the POPRES panel (Nelson et al,
   2008), and results from principal components analysis (PCA) of
   genotypes at 197,146 single nucleotide polymorphisms (SNPs)." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +61,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">PCAviz</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">PCAviz</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.34</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -78,6 +88,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -85,17 +96,21 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Principal components analysis of genetic variation in POPRES sample</h1>
+    
+    <div class="hidden name"><code>popres.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Data on 1,387 European subjects from the POPRES panel (Nelson et al,
   2008), and results from principal components analysis (PCA) of
   genotypes at 197,146 single nucleotide polymorphisms (SNPs).</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>data</span>(<span class='no'>popres</span>)</pre>
         
@@ -199,5 +214,8 @@ file size, only the top 4 PCs were retained.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

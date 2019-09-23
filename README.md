@@ -50,6 +50,8 @@ library(pkgdown)
 build_site(mathjax = FALSE)
 ```
 
+Version 1.1.0 of pkgdown was used.
+
 ## What's included
 
 This is the current structure of the R package:

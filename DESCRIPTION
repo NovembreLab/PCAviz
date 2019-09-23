@@ -38,3 +38,4 @@ Suggests:
 License: GPL (>= 3)
 NeedsCompilation: no
 VignetteBuilder: knitr
+RoxygenNote: 6.1.1

@@ -21,12 +21,15 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Transformations of principal components — pcaviz-transformations" />
 
 <meta property="og:description" content="These functions define basic transformations of points in Euclidean
@@ -38,6 +41,9 @@
   space are also possible. In all cases, points are stored as row
   vectors in a matrix, or in a data frame within a pcaviz object." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -60,8 +66,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">PCAviz</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">PCAviz</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.34</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -83,6 +93,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,12 +101,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transformations of principal components</h1>
+    
+    <div class="hidden name"><code>pcaviz-transformations.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>These functions define basic transformations of points in Euclidean
   space. This includes principal components (PCs) as a special
@@ -106,6 +120,7 @@
   space are also possible. In all cases, points are stored as row
   vectors in a matrix, or in a data frame within a pcaviz object.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>pcaviz_rotate</span>(<span class='no'>x</span>, <span class='no'>angle</span>, <span class='no'>dims</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"degrees"</span>,<span class='st'>"radians"</span>))
 
@@ -131,7 +146,7 @@
                    <span class='kw'>reflect.y</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,<span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>1</span>),<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>),
                    <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"degrees"</span>,<span class='st'>"radians"</span>))</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -192,21 +207,22 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    
     <p><code>matrix_rotate</code> applies a counter-clockwise plane rotation to row
 vectors in <code>X</code> when <code>angle</code> is positive. <code>pcaviz_rotate</code>
-applies a counter-clockwise plane rotation to selected PCs in <code>x</code>.
-    <code>matrix_reflect</code> reflects points about the origin, individually
+applies a counter-clockwise plane rotation to selected PCs in <code>x</code>.</p>
+<p><code>matrix_reflect</code> reflects points about the origin, individually
 along each selected dimension. <code>pcaviz_reflect</code> reflects selected
-PCs.
-    <code>matrix_scale</code> scales the selected dimensions by <code>scale</code>, and
+PCs.</p>
+<p><code>matrix_scale</code> scales the selected dimensions by <code>scale</code>, and
 <code>pcaviz_scale</code> scales the selected PCs by <code>scale</code>. Note that
 it is also possible to use a negative scaling factor, which is
 equivalent to a positive scaling combined with a reflection about the
-origin.
-    <code>matrix_translate</code> translates row vectors in <code>X</code> by <code>a</code>
+origin.</p>
+<p><code>matrix_translate</code> translates row vectors in <code>X</code> by <code>a</code>
 within the selected dimensions. <code>pcaviz_translate</code> translates
-selected PCs by a.
-    <code>matrix_transform2d</code> and <code>pcaviz_transform2d</code> are convenience
+selected PCs by a.</p>
+<p><code>matrix_transform2d</code> and <code>pcaviz_transform2d</code> are convenience
 functions that that apply a sequence of 2-d transformations in the
 following order: (1) counter-clockwise rotation, (2) reflection, (3)
 scaling and (4) translation. Note that exactly two dimensions (PCs) must
@@ -223,11 +239,11 @@ be selected.</p>
            <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>1</span>))
 
 <span class='co'># Rotate the points 45 degrees counter-clockwise.</span>
-<span class='fu'>matrix_rotate</span>(<span class='no'>X</span>,<span class='fl'>45</span>)</div><div class='output co'>#&gt;            [,1]   [,2]
-#&gt; [1,]  0.000e+00 0.0000
-#&gt; [2,]  7.071e-01 0.7071
-#&gt; [3,] -7.071e-01 0.7071
-#&gt; [4,]  1.110e-16 1.4142</div><div class='input'>
+<span class='fu'>matrix_rotate</span>(<span class='no'>X</span>,<span class='fl'>45</span>)</div><div class='output co'>#&gt;               [,1]      [,2]
+#&gt; [1,]  0.000000e+00 0.0000000
+#&gt; [2,]  7.071068e-01 0.7071068
+#&gt; [3,] -7.071068e-01 0.7071068
+#&gt; [4,]  1.110223e-16 1.4142136</div><div class='input'>
 <span class='co'># Reflect the points along the first dimension; i.e., X axis</span>
 <span class='co'># in the Cartesian plane about the X=0 line.</span>
 <span class='fu'>matrix_reflect</span>(<span class='no'>X</span>,<span class='fl'>1</span>)</div><div class='output co'>#&gt;      [,1] [,2]
@@ -285,5 +301,8 @@ be selected.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

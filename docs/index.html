@@ -8,8 +8,8 @@
 <title>Visualizing Principal Components Analysis • PCAviz</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Visualizing Principal Components Analysis">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="Visualizing Principal Components Analysis">
 <meta property="og:description" content="The 'PCAviz' package provides a simple interface for
     quickly creating visually compelling plots from Principal
     Components Analysis (PCA) and accompanying data. See the vignettes
@@ -33,8 +33,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">PCAviz</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">PCAviz</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.34</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -77,8 +81,8 @@
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"NovembreLab/PCAviz"</span>,<span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Alternatively, to install and test PCAviz, run the following commands in the shell:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> CMD build PCAviz
-<span class="ex">R</span> CMD check --as-cran PCAviz_0.3-33.tar.gz
-<span class="ex">R</span> CMD INSTALL PCAviz_0.3-33.tar.gz</code></pre></div>
+<span class="ex">R</span> CMD check --as-cran PCAviz_0.3-34.tar.gz
+<span class="ex">R</span> CMD INSTALL PCAviz_0.3-34.tar.gz</code></pre></div>
 <p>Note that these commands require that the dependencies have already been installed. See the <a href="DESCRIPTION" class="uri">DESCRIPTION</a> file for details.</p>
 <p>Load PCAviz into the R environment, and get an overview of the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PCAviz)
@@ -94,6 +98,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p>These are the R commands to build the website (make sure you are connected to Internet while running these commands):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pkgdown)
 <span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>(<span class="dt">mathjax =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Version 1.1.0 of pkgdown was used.</p>
 </div>
 <div id="whats-included" class="section level2">
 <h2 class="hasAnchor">
@@ -136,19 +141,28 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
   </div>
 
   <div class="col-md-3" id="sidebar">
-    <h2>Links</h2>
+    <div class="links">
+<h2>Links</h2>
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="http://github.com/NovembreLab/PCAviz">http://​github.com/​NovembreLab/​PCAviz</a>
 </li>
 <li>Report a bug at <br><a href="http://github.com/NovembreLab/PCAviz/issues">http://​github.com/​NovembreLab/​PCAviz/​issues</a>
 </li>
 </ul>
+</div>
+<div class="license">
 <h2>License</h2>
-<p>GPL (&gt;= 3)</p>
+<ul class="list-unstyled">
+<li>GPL (&gt;= 3)</li>
+</ul>
+</div>
+<div class="citation">
 <h2>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing PCAviz</a></li>
 </ul>
+</div>
+<div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>John Novembre <br><small class="roles"> Author, maintainer </small>  </li>
@@ -158,6 +172,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <li>Peter Carbonetto <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
+
+  </div>
 </div>
 
 
@@ -171,6 +187,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
