@@ -91,11 +91,13 @@
   \item{x}{An object of class "pcaviz".}
 
   \item{coords}{The names of the PCs or data columns to plot in the
-    horizontal and vertical axes. This may specify more than 2
+    horizontal and vertical axes. This may specify more than two
     variables, in which case all combinations of the variables will be
     compared in different panels. For interactive graphics (\code{plotly
     = TRUE}), exactly two PCs or data columns must be chosen.}
-  
+
+  \item{arrange.coords}{Add description of this argument here.}
+
   \item{col}{Name of PC or data column in pcaviz object \code{x}.}
   
   \item{data.col}{Name of categorical variable in \code{x} to plot

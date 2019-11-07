@@ -689,7 +689,9 @@ pcaviz_violin <-
 # single pcaviz object (e.g., multiple plots showing combinations of
 # PCs in the horizontal and vertical axes).
 pcaviz_ggplot <-
-  function (x, coords, plotly = FALSE, draw.points = plotly, label, group,
+  function (x, coords,
+            arrange.coords = c("all.pairs","each.vs.pc1","consecutive.pairs"),
+            plotly = FALSE, draw.points = plotly, label, group,
             color, shape, colors, shapes, abbreviated.label, 
             group.summary.fun = pcaviz_summary_default,
             group.summary.labels = TRUE, draw.pc.axes, hide.xy.axes,
@@ -700,9 +702,9 @@ pcaviz_ggplot <-
               list(size = 3,stroke = 0,na.rm = TRUE)
             else
               list(size = 2,stroke = 1,na.rm = TRUE),
-            geom.text.params = list(size = 3,fontface = "bold",na.rm = TRUE,
+            geom.text.params = list(size = 3,fontface = "plain",na.rm = TRUE,
               alpha = 1),
-            geom.point.summary.params = list(shape = 19,stroke = 1,size = 10,
+            geom.point.summary.params = list(shape = 19,stroke = 1,size = 6,
                 show.legend = FALSE,alpha = 0.8),
             geom.text.summary.params = list(size = 3.25,fontface = "plain",
               color = "black",show.legend = FALSE,alpha = 0.8),
@@ -742,6 +744,11 @@ pcaviz_ggplot <-
     stop(paste("For plotly graphcs, argument \"coords\" must specify",
                "exactly 2 PCs or data columns in \"x\""))
 
+  # Determine which variables (PCs) are plotted against each
+  # other. (This setting really only matters when the number of
+  # selected PCs is three or greater.
+  arrange.coords <- match.arg(arrange.coords)      
+  
   # Check input "draw.points".
   if (!is.TorF(draw.points))
     stop("Argument \"draw.points\" should be TRUE or FALSE")
@@ -976,7 +983,9 @@ pcaviz_ggplot <-
   # Decide whether to add some additional information (e.g., to the PC
   # axes (e.g., proportion of variance explained).
   if (missing(include.with.pc.axes)) {
-    if (valid.pc.dims(x,coords) & !any(is.na(x$sdev))) {
+    if (length(coords) <= 2 &
+        valid.pc.dims(x,coords) &
+        !any(is.na(x$sdev))) {
       if (any(is.na(x$var))) {
         message("Variance explained will be added to the axis labels.")
         include.with.pc.axes <- "var"
@@ -1922,10 +1931,17 @@ pcaviz_ggplot_helper <-
       # eigenvalue) to the axis labels.
       if (include.with.pc.axes != "none") {
         scree.data <- get.screeplot.quantity(x,include.with.pc.axes)
-        pc.axes.data[1,"label"] <-
-          sprintf("%s (%0.3f)",pc.axes.data[1,"label"],scree.data$y[h])
-        pc.axes.data[2,"label"] <- 
-          sprintf("%s (%0.3f)",pc.axes.data[2,"label"],scree.data$y[v])
+        if (include.with.pc.axes == "pve") {
+          pc.axes.data[1,"label"] <-
+            sprintf("%s (%0.2g%%)",pc.axes.data[1,"label"],100*scree.data$y[h])
+          pc.axes.data[2,"label"] <- 
+            sprintf("%s (%0.2g%%)",pc.axes.data[2,"label"],100*scree.data$y[v])
+        } else {
+          pc.axes.data[1,"label"] <-
+            sprintf("%s (%0.3g)",pc.axes.data[1,"label"],scree.data$y[h])
+          pc.axes.data[2,"label"] <- 
+            sprintf("%s (%0.3g)",pc.axes.data[2,"label"],scree.data$y[v])
+        }
       }
       
       # Draw the lines using geom_segment.
@@ -1978,15 +1994,19 @@ pcaviz_ggplot_helper <-
   # Show the proportion of variance in y that is explained by x, if
   # requested.
   if (show.r.squared)
-    plot.title <- sprintf("%s (r2 = %0.3f)",plot.title,
-                          summary(fit.lm)$r.squared)
+    plot.title <- sprintf("%s (r2 = %0.2g%%)",plot.title,
+                          100*summary(fit.lm)$r.squared)
 
   # If requested, add the statistic (variance explained, PVE or
   # eigenvalue) to the axis labels.
   if (include.with.pc.axes != "none") {
     scree.data <- get.screeplot.quantity(x,include.with.pc.axes)
-    out        <- out + labs(x = sprintf("%s (%0.3f)",h,scree.data$y[h]),
-                             y = sprintf("%s (%0.3f)",v,scree.data$y[v]))
+    if (include.with.pc.axes == "pve")
+      out <- out + labs(x = sprintf("%s (%0.2g%%)",h,100*scree.data$y[h]),
+                        y = sprintf("%s (%0.2g%%)",v,100*scree.data$y[v]))
+    else
+      out <- out + labs(x = sprintf("%s (%0.3g)",h,scree.data$y[h]),
+                        y = sprintf("%s (%0.3g)",v,scree.data$y[v]))
   }
   
   # Preserve the scaling of the x and y axes, if requested.

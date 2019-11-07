@@ -1,8 +1,8 @@
 Package: PCAviz
 Encoding: UTF-8
 Type: Package
-Version: 0.3-34
-Date: 2019-09-20
+Version: 0.3-35
+Date: 2019-11-07
 Title: Visualizing Principal Components Analysis
 Authors@R: c(person("John","Novembre",role=c("aut","cre"),
                     email="jnovembre@uchicago.edu"),

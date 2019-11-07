@@ -102,24 +102,27 @@ abbreviated country names.
 plot(popres)
 ```
 
-Users may supply detailed arguments to the plot function. Here except Germany and Serbia and Montenegro only median positions in each population are plotted. Germany is set as non-transparent, while Serbia and Montenegro is semi-transparent.
+Users may supply detailed arguments to the plot function. Here except
+Germany and Serbia and Montenegro, only median positions in each
+population are plotted. Samples from Germany are set as
+non-transparent, while Serbia and Montenegro is semi-transparent, and
+the samples from the rest of the countries are fully transparent (and
+therefore do not appear in the plot).
 
 ```{r, results = "hide", fig.width = 8}
-id_sam = which(popres$data$country=="Serbia and Montenegro")
-id_ger = which(popres$data$country=="Germany")
-vec = rep(0,nrow(popres$data)) 
-vec[id_sam] = vec[id_sam] + 0.5
-vec[id_ger] = vec[id_ger] + 1
-plot(popres,geom.text.params = list(size = 3,fontface = "plain",
-                                    na.rm = TRUE,alpha=vec),
+v         <- rep(0,nrow(popres$data)) 
+id_sam    <- popres$data$country == "Serbia and Montenegro"
+id_ger    <- popres$data$country == "Germany"
+v[id_sam] <- v[id_sam] + 0.5
+v[id_ger] <- v[id_ger]  + 1
+plot(popres,
+     geom.text.params = list(size = 3,fontface = "plain",na.rm = TRUE,
+                             alpha = v),
      geom.point.summary.params = list(shape = 16,stroke = 1,size = 10,
-                                      show.legend = FALSE,alpha=.6),
-     geom.text.summary.params = list(size = 3.25,fontface = "bold",
-                                     color = "black",show.legend = FALSE,alpha=.8))
+                                      show.legend = FALSE,alpha = 0.6),
+	 geom.text.summary.params = list(size = 3.25,color = "black",
+	 							     show.legend = FALSE,alpha = 0.8))
 ```
-
-
-
 
 One difference with the published plot is the color scheme used.
 In this next code chunk, we do a better job reproducing the figure in
