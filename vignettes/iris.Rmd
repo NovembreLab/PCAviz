@@ -120,12 +120,22 @@ plot(iris,coords = c("PC1","Petal.Width"),draw.points = TRUE)
 ```
 
 The PCAviz plotting interface also allows for quickly plotting
-multiple combinations of PCs.
+multiple combinations of PCs. The default, when multiple PCs are
+selected, is to plot all combinations of the PCs:
 
 ```{r, fig.width = 7,fig.height = 6}
-plot(iris,coords = paste0("PC",1:4),group = NULL,scale.pc.axes = 0.6)
+plot(iris,coords = paste0("PC",1:4),group = NULLx)
 ```
 
+An alternative to plotting all PC combinations is to plot pairs of
+consecutive PCs, which can be conveniently performed by setting
+`arrange.coords = "consecutive.pairs"`:
+
+```{r, fig.width = 7, fig.height = 6}
+plot(x,coords = paste0("PC",1:4),arrange.coords = "consecutive.pairs",
+     draw.points = TRUE,group = NULL)
+```
+	 
 The PCAviz package has an easy-to-use interface for creating
 violin plots to visualize the relationship between PCs and categorical
 data variables. In this example, Species is compared against all four PCs.

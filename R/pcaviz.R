@@ -691,8 +691,8 @@ pcaviz_violin <-
 pcaviz_ggplot <-
   function (x, coords,
             arrange.coords = c("all.pairs","each.vs.pc1","consecutive.pairs"),
-            plotly = FALSE, draw.points = plotly, label, group,
-            color, shape, colors, shapes, abbreviated.label, 
+            plotly = FALSE, draw.points = plotly, label, group, color, shape,
+            colors, shapes, abbreviated.label, 
             group.summary.fun = pcaviz_summary_default,
             group.summary.labels = TRUE, draw.pc.axes, hide.xy.axes,
             include.with.pc.axes, draw.linear.fit, draw.confint,
@@ -746,7 +746,7 @@ pcaviz_ggplot <-
 
   # Determine which variables (PCs) are plotted against each
   # other. (This setting really only matters when the number of
-  # selected PCs is three or greater.
+  # selected PCs is 3 or greater.
   arrange.coords <- match.arg(arrange.coords)      
   
   # Check input "draw.points".
@@ -983,7 +983,7 @@ pcaviz_ggplot <-
   # Decide whether to add some additional information (e.g., to the PC
   # axes (e.g., proportion of variance explained).
   if (missing(include.with.pc.axes)) {
-    if (length(coords) <= 2 &
+    if ((!draw.pc.axes | length(coords) <= 2) &
         valid.pc.dims(x,coords) &
         !any(is.na(x$sdev))) {
       if (any(is.na(x$var))) {
@@ -1110,40 +1110,66 @@ pcaviz_ggplot <-
     if (!valid.data.cols(x,tooltip))
       stop(paste("Argument \"tooltip\" does not specify valid names of PCs",
                  "or data columns in \"x\"") )
-  
-  # Generate two list objects containing the arguments to plot_grid:
-  # one for the ggplot objects, and another for the plot labels.
-  plot.grid.args     <- rep(list(NULL),(n-1)^2)
-  plot.grid.labels   <- rep("",(n-1)^2)
+
+  # Generate three objects: (1) a table containing the pairs of
+  # co-ordinates to plot, (2) a list containing the ggplot objects
+  # passed as input to plot_grid, and (3) a vector containing the plot
+  # labels passed to plot_grid.
+  if (n == 2) {
+
+    # In this case, there is only one scatterplot to create.
+    plot.grid.coords <- data.frame(x = 1,y = 2,plot = TRUE)
+  } else if (arrange.coords == "each.vs.pc1") {
+
+    # Create scatterplots comparing the first PC against all others.
+    plot.grid.coords <- data.frame(x = 1,y = 2:n,plot = TRUE)
+  } else if (arrange.coords == "consecutive.pairs") {
+
+    # Create scatterplots comparing each consecutive pair of PCs.
+    plot.grid.coords <- data.frame(x = seq(1,n-1),y = seq(2,n),plot = TRUE)
+  } else if (arrange.coords == "all.pairs") {
+
+    # Create scatterplots comparing each pair of PCs.
+    plot.grid.coords <- expand.grid(y = seq(2,n),x = seq(1,n-1))
+    plot.grid.coords <- plot.grid.coords[c("x","y")]
+    plot.grid.coords <- transform(plot.grid.coords,plot = x < y)
+  }
+  plot.grid.coords   <- transform(plot.grid.coords,
+                                  x = coords[x],
+                                  y = coords[y])
+  m                  <- nrow(plot.grid.coords)
+  plot.grid.args     <- vector("list",m)
+  plot.grid.labels   <- rep("",m)
   letters.for.labels <- LETTERS
 
-  # Repeat for all combinations of the co-ordinates.
-  k <- 0
-  for (i in 1:(n-1))
-    for (j in 2:n) {
-      k <- k + 1
-      if (i < j) {
-        if (generate.panel.titles)
-          plot.title <- paste(coords[i],"vs.",coords[j])
-        plot.grid.args[[k]] <-
-          pcaviz_ggplot_helper(x,coords[c(i,j)],draw.points,label,group,
-                               color,shape,colors.scale,shapes.scale,alabel,
-                               group.summary.fun,group.summary.labels,
-                               draw.pc.axes,hide.xy.axes,include.with.pc.axes,
-                               draw.linear.fit,draw.confint,confint.level,
-                               show.r.squared,preserve.scale,overlay,
-                               geom.point.params,geom.text.params,
-                               geom.point.summary.params,
-                               geom.text.summary.params,
-                               geom.segment.pc.axes,geom.text.pc.axes,
-                               geom.abline.params.linearfit,
-                               geom.abline.params.confint,scale.pc.axes,
-                               theme,show.legend,plot.title)
-        plot.grid.labels[[k]] <- letters.for.labels[1]
-        letters.for.labels    <- letters.for.labels[-1]
-      }
+  # Generate the scatterplots. Repeat for all selected combinations of
+  # the co-ordinates.
+  for (k in 1:m) {
+    coords <- plot.grid.coords[k,]
+    if (coords$plot) {
+      i <- coords$x
+      j <- coords$y
+      if (generate.panel.titles)
+          plot.title <- paste(i,"vs.",j)
+      plot.grid.args[[k]] <-
+        pcaviz_ggplot_helper(x,c(i,j),draw.points,label,group,color,shape,
+                             colors.scale,shapes.scale,alabel,
+                             group.summary.fun,group.summary.labels,
+                             draw.pc.axes,hide.xy.axes,include.with.pc.axes,
+                             draw.linear.fit,draw.confint,confint.level,
+                             show.r.squared,preserve.scale,overlay,
+                             geom.point.params,geom.text.params,
+                             geom.point.summary.params,
+                             geom.text.summary.params,
+                             geom.segment.pc.axes,geom.text.pc.axes,
+                             geom.abline.params.linearfit,
+                             geom.abline.params.confint,scale.pc.axes,
+                             theme,show.legend,plot.title)
+      plot.grid.labels[[k]] <- letters.for.labels[1]
+      letters.for.labels    <- letters.for.labels[-1]
     }
-
+  }
+  
   if (plotly) {
 
     # Return a plotly graph.

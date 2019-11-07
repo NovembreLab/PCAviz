@@ -25,8 +25,10 @@
   publications, webpages, etc.}
 \usage{
 
-  \method{plot}{pcaviz}(x, coords, plotly = FALSE, draw.points = plotly,
-    label, group, color, shape, colors, shapes, abbreviated.label, 
+  \method{plot}{pcaviz}(x, coords,
+    arrange.coords = c("all.pairs","each.vs.pc1","consecutive.pairs"),
+    plotly = FALSE, draw.points = plotly, label, group, color, shape,
+    colors, shapes, abbreviated.label, 
     group.summary.fun = pcaviz_summary_default,
     group.summary.labels = TRUE, draw.pc.axes, hide.xy.axes,
     include.with.pc.axes, draw.linear.fit, draw.confint, confint.level = 0.95,
@@ -443,8 +445,13 @@ plot(x,draw.points = TRUE,color = "Petal.Width",shape = "Species")
 # Plot the first PC vs. Petal Width.
 plot(x,coords = c("PC1","Petal.Width"),draw.points = TRUE)
 
-# Plot all combinations of PCs 1-4.
-plot(x,coords = paste0("PC",1:4),draw.points = TRUE,group = NULL)
+# Plot different combinations of PCs 1-4.
+plot(x,coords = paste0("PC",1:4),arrange.coords = "all.pairs",
+     draw.points = TRUE,group = NULL)
+plot(x,coords = paste0("PC",1:4),arrange.coords = "each.vs.pc1",
+     draw.points = TRUE,group = NULL)
+plot(x,coords = paste0("PC",1:4),arrange.coords = "consecutive.pairs",
+     draw.points = TRUE,group = NULL)
 
 # Draw the rotated PC axes.
 y <- pcaviz_reduce_whitespace(x)
