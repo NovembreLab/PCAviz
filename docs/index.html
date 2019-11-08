@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">PCAviz</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.34</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.37</span>
       </span>
     </div>
 
@@ -81,8 +81,8 @@
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"NovembreLab/PCAviz"</span>,<span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Alternatively, to install and test PCAviz, run the following commands in the shell:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">R</span> CMD build PCAviz
-<span class="ex">R</span> CMD check --as-cran PCAviz_0.3-34.tar.gz
-<span class="ex">R</span> CMD INSTALL PCAviz_0.3-34.tar.gz</code></pre></div>
+<span class="ex">R</span> CMD check --as-cran PCAviz_0.3-37.tar.gz
+<span class="ex">R</span> CMD INSTALL PCAviz_0.3-37.tar.gz</code></pre></div>
 <p>Note that these commands require that the dependencies have already been installed. See the <a href="DESCRIPTION" class="uri">DESCRIPTION</a> file for details.</p>
 <p>Load PCAviz into the R environment, and get an overview of the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PCAviz)
@@ -96,8 +96,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h2 class="hasAnchor">
 <a href="#how-to-build-static-html-documentation" class="anchor"></a>How to build static HTML documentation</h2>
 <p>These are the R commands to build the website (make sure you are connected to Internet while running these commands):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pkgdown)
-<span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>(<span class="dt">mathjax =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>(<span class="dt">mathjax =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>Version 1.1.0 of pkgdown was used.</p>
 </div>
 <div id="whats-included" class="section level2">

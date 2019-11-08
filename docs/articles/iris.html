@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PCAviz</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.34</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.37</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@
     <div class="page-header toc-ignore">
       <h1>Illustration of PCAviz on Iris data</h1>
             
-            <h4 class="date">2019-09-23</h4>
+            <h4 class="date">2019-11-08</h4>
       
       <small class="dont-index">Source: <a href="http://github.com/NovembreLab/PCAviz/blob/master/vignettes/iris.Rmd"><code>vignettes/iris.Rmd</code></a></small>
       <div class="hidden name"><code>iris.Rmd</code></div>
@@ -182,9 +182,8 @@ out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span 
  
 </p>
 </div>
-<p>The PCAviz plotting interface also allows for quickly plotting multiple combinations of PCs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">coords =</span> <span class="kw">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>),<span class="dt">group =</span> <span class="ot">NULL</span>,<span class="dt">scale.pc.axes =</span> <span class="fl">0.6</span>)
-<span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
+<p>The PCAviz plotting interface also allows for quickly plotting multiple combinations of PCs. The default, when multiple PCs are selected, is to plot all combinations of the PCs:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">coords =</span> <span class="kw">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>),<span class="dt">group =</span> <span class="ot">NULL</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="iris_files/figure-html/unnamed-chunk-15-1.png" alt="&amp;nbsp;" width="672"><p class="caption">
  
@@ -195,10 +194,18 @@ out.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[<span 
 #  setosa     st           
 #  versicolor vr           
 #  virginica  gn</code></pre>
+<p>An alternative to plotting all PC combinations is to plot pairs of consecutive PCs, which can be conveniently performed by setting <code>arrange.coords = "consecutive.pairs"</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris,<span class="dt">coords =</span> <span class="kw">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>),<span class="dt">arrange.coords =</span> <span class="st">"consecutive.pairs"</span>,
+     <span class="dt">draw.points =</span> <span class="ot">TRUE</span>,<span class="dt">group =</span> <span class="ot">NULL</span>)</code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="iris_files/figure-html/unnamed-chunk-16-1.png" alt="&amp;nbsp;" width="672"><p class="caption">
+ 
+</p>
+</div>
 <p>The PCAviz package has an easy-to-use interface for creating violin plots to visualize the relationship between PCs and categorical data variables. In this example, Species is compared against all four PCs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pcaviz-plots.html">pcaviz_violin</a></span>(iris)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="iris_files/figure-html/unnamed-chunk-16-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
+<img src="iris_files/figure-html/unnamed-chunk-17-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
  
 </p>
 </div>
@@ -210,7 +217,7 @@ dat &lt;-<span class="st"> </span><span class="kw">with</span>(dat,<span class="
              <span class="dt">shape =</span> <span class="dv">1</span>,<span class="dt">size =</span> <span class="fl">5.5</span>,<span class="dt">inherit.aes =</span> <span class="ot">FALSE</span>)
 <span class="co"># Proportion of variance explained (PVE) will be added to the axis labels.</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="iris_files/figure-html/unnamed-chunk-17-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
+<img src="iris_files/figure-html/unnamed-chunk-18-1.png" alt="&amp;nbsp;" width="480"><p class="caption">
  
 </p>
 </div>
