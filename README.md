@@ -18,8 +18,8 @@ in the shell:
 
 ```bash
 R CMD build PCAviz
-R CMD check --as-cran PCAviz_0.3-36.tar.gz
-R CMD INSTALL PCAviz_0.3-36.tar.gz
+R CMD check --as-cran PCAviz_0.3-37.tar.gz
+R CMD INSTALL PCAviz_0.3-37.tar.gz
 ```
 
 Note that these commands require that the dependencies have already

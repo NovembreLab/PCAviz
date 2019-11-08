@@ -124,7 +124,7 @@ multiple combinations of PCs. The default, when multiple PCs are
 selected, is to plot all combinations of the PCs:
 
 ```{r, fig.width = 7,fig.height = 6}
-plot(iris,coords = paste0("PC",1:4),group = NULLx)
+plot(iris,coords = paste0("PC",1:4),group = NULL)
 ```
 
 An alternative to plotting all PC combinations is to plot pairs of
@@ -132,7 +132,7 @@ consecutive PCs, which can be conveniently performed by setting
 `arrange.coords = "consecutive.pairs"`:
 
 ```{r, fig.width = 7, fig.height = 6}
-plot(x,coords = paste0("PC",1:4),arrange.coords = "consecutive.pairs",
+plot(iris,coords = paste0("PC",1:4),arrange.coords = "consecutive.pairs",
      draw.points = TRUE,group = NULL)
 ```
 	 

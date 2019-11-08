@@ -1121,22 +1121,21 @@ pcaviz_ggplot <-
     plot.grid.coords <- data.frame(x = 1,y = 2,plot = TRUE)
   } else if (arrange.coords == "each.vs.pc1") {
 
-    # Create scatterplots comparing the first PC against all others.
+    # Create scatterplots for the first PC against all others.
     plot.grid.coords <- data.frame(x = 1,y = 2:n,plot = TRUE)
   } else if (arrange.coords == "consecutive.pairs") {
 
-    # Create scatterplots comparing each consecutive pair of PCs.
+    # Create scatterplots for each consecutive pair of PCs.
     plot.grid.coords <- data.frame(x = seq(1,n-1),y = seq(2,n),plot = TRUE)
   } else if (arrange.coords == "all.pairs") {
 
-    # Create scatterplots comparing each pair of PCs.
+    # Create scatterplots for each pair of PCs.
     plot.grid.coords <- expand.grid(y = seq(2,n),x = seq(1,n-1))
     plot.grid.coords <- plot.grid.coords[c("x","y")]
     plot.grid.coords <- transform(plot.grid.coords,plot = x < y)
   }
-  plot.grid.coords   <- transform(plot.grid.coords,
-                                  x = coords[x],
-                                  y = coords[y])
+  plot.grid.coords$x <- coords[plot.grid.coords$x]
+  plot.grid.coords$y <- coords[plot.grid.coords$y]
   m                  <- nrow(plot.grid.coords)
   plot.grid.args     <- vector("list",m)
   plot.grid.labels   <- rep("",m)

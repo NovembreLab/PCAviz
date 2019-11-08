@@ -37,9 +37,9 @@
       list(size = 3,stroke = 0,na.rm = TRUE)
     else
       list(size = 2,stroke = 1,na.rm = TRUE),
-    geom.text.params = list(size = 3,fontface = "bold",na.rm = TRUE,
+    geom.text.params = list(size = 3,fontface = "plain",na.rm = TRUE,
                             alpha = 1),
-    geom.point.summary.params = list(shape = 19,stroke = 1,size = 10,
+    geom.point.summary.params = list(shape = 19,stroke = 1,size = 6,
       show.legend = FALSE,alpha = 0.8),
     geom.text.summary.params = list(size = 3.25,fontface = "plain",
       color = "black",show.legend = FALSE,alpha = 0.8),
@@ -94,11 +94,20 @@
 
   \item{coords}{The names of the PCs or data columns to plot in the
     horizontal and vertical axes. This may specify more than two
-    variables, in which case all combinations of the variables will be
-    compared in different panels. For interactive graphics (\code{plotly
-    = TRUE}), exactly two PCs or data columns must be chosen.}
+    variables, in which case combinations of the variables will be
+    visualized in different panels. For interactive graphics
+    (\code{plotly = TRUE}), exactly two PCs or data columns must be
+    chosen.}
 
-  \item{arrange.coords}{Add description of this argument here.}
+  \item{arrange.coords}{Specifies how combinations of the selected PCs
+    or data columns are visualized in the scatterplots when
+    \code{coords} contains more than two elements. When
+    \code{arrange.coords = "all.pairs"}, a scatterplot is shown for
+    every combination of \code{coords}. When \code{arrange.coords =
+    "each.vs.pc1"}, scatterplots are shown the first element of
+    \code{coords} against all elements. And when \code{arrange.coords =
+    "consecutive.pairs"}, a scatterplot is drawn for each consecutive
+    pair of elements in \code{coords}.}
 
   \item{col}{Name of PC or data column in pcaviz object \code{x}.}
   
