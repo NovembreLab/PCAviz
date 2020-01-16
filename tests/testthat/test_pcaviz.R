@@ -3,13 +3,13 @@ context("PCAviz")
 # ----------------------------------------------------------------------
 test_that("POPRES data set loads correctly",{
   data(popres)
-  expect_equal(sd(popres$x$PC1),0.027,tolerance = 0.001)
+  expect_equal(sd(popres$x$PC1),0.027,tolerance = 0.001,scale = 1)
 })
 
 # ----------------------------------------------------------------------
 test_that("RegMap data set loads correctly",{
   data(regmap)
-  expect_equal(sd(regmap$PC1),39.85,tolerance = 0.01)
+  expect_equal(sd(regmap$PC1),39.85,tolerance = 0.01,scale = 1)
 })
 
 # ----------------------------------------------------------------------
@@ -73,7 +73,7 @@ test_that("pcaviz_transform2d() works correctly",{
                           reflect.y = TRUE,
                           scale     = c(2,5),
                           a         = c(-1,2))
-  expect_equal(y$data,as.data.frame(Y),tolerance = 1e-8)
+  expect_equal(y$data,as.data.frame(Y),tolerance = 1e-8,scale = 1)
 })
 
 # ----------------------------------------------------------------------
